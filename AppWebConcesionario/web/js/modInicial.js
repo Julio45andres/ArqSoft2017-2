@@ -22,6 +22,10 @@ angular.module('modInicial',['ngRoute']).config(
             templateUrl:'Marca.jsp',
             controller:'ctrMarca'
         }).
+        when('/tipoPagos',{
+            templateUrl:'TipoPago.jsp',
+            controller:'ctrTipoPago'
+        }).                
         otherwise({
             templateUrl:'Cliente.jsp',
             controller:'ctrCliente'
@@ -66,6 +70,17 @@ service('$srv',function($http){
         return $http({
                 method:'POST',
                 url:'MarcaServlet',
+                params:datos,
+                headers:{
+                    'Content-type':'application/json'
+                }
+        });
+    }
+    
+    this.tipoPagos=function(datos){
+        return $http({
+                method:'POST',
+                url:'TipoPagoServlet',
                 params:datos,
                 headers:{
                     'Content-type':'application/json'
@@ -296,4 +311,60 @@ controller('ctrMarca',function($scope,$srv){
     }
     
     $scope.get();
-}) 
+}).
+controller('ctrTipoPago',function($scope,$srv){
+    $scope.tipoPago={};    
+    
+    $scope.listTipoPagos=[];
+    
+    $scope.response=undefined;
+    
+    $scope.get=function(){
+        var data={method:'GET'}
+        $srv.tipoPagos(data).then(
+        function(res){
+            $scope.listTipoPagos=res.data;
+        },function(err){
+            console.log(err);
+        })
+    }
+    
+    $scope.post=function(){
+        $scope.tipoPago.method='POST';
+        $srv.tipoPagos($scope.tipoPago).then(
+        function(res){
+            $scope.response=res.data;
+            $scope.get();
+        },function(err){
+            console.log(err);
+        })
+    }
+    
+    $scope.put=function(){
+        $scope.tipoPago.method='PUT';
+        $srv.tipoPagos($scope.tipoPago).then(
+        function(res){
+            $scope.response=res.data;
+            $scope.get();
+        },function(err){
+            console.log(err);
+        })
+    }
+    
+    $scope.edit=function(item){
+        $scope.tipoPago=item;
+    }
+    
+    $scope.remove=function(item){
+        item.method='DELETE';
+        $srv.tipoPagos(item).then(
+        function(res){
+            $scope.response=res.data;
+            $scope.get();
+        },function(err){
+            console.log(err);
+        })
+    }
+    
+    $scope.get();
+})

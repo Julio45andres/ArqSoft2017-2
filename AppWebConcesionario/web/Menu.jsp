@@ -27,6 +27,7 @@
         <li><a href="#!estados">Estados</a></li>
         <li><a href="#!marcas">Marcas</a></li>
         <li><a href="#!vendedores">Vendedores</a></li>
+        <li><a href="#!tipoPagos">Tipo Pagos</a></li>
         
       </ul>
       <ul class="nav navbar-nav navbar-right">
