@@ -78,7 +78,7 @@ public class Vehiculo implements Serializable {
     public Vehiculo(String matricula) {
         this.matricula = matricula;
     }
-    
+
     public Vehiculo(String matricula, String modelo, String marca, String estado, String color, byte[] foto) {
         this.matricula = matricula;
         this.modelo = modelo;
@@ -103,7 +103,7 @@ public class Vehiculo implements Serializable {
     public void setModelo(String modelo) {
         this.modelo = modelo;
     }
-    
+
     public String getMarca() {
         return marca;
     }
@@ -119,7 +119,7 @@ public class Vehiculo implements Serializable {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-    
+
     public String getColor() {
         return color;
     }

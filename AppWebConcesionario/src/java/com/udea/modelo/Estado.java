@@ -46,7 +46,7 @@ public class Estado implements Serializable {
     @Size(max = 250)
     @Column(name = "descripcion")
     private String descripcion;
-    
+
     public Estado() {
     }
 

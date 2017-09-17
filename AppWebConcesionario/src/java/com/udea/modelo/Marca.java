@@ -42,7 +42,7 @@ public class Marca implements Serializable {
     @Size(min = 1, max = 30)
     @Column(name = "nombreMarca")
     private String nombreMarca;
-    
+
     public Marca() {
     }
 
