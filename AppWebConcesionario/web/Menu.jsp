@@ -25,6 +25,7 @@
         <li><a href="#">Compra</a></li>
         <li><a href="#">Vehiculo</a></li>
         <li><a href="#!estados">Estados</a></li>
+        <li><a href="#!marcas">Marcas</a></li>
         <li><a href="#!vendedores">Vendedores</a></li>
         
       </ul>

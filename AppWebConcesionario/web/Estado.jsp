@@ -27,7 +27,7 @@
         <button type="button" class="btn btn-default" ng-click="put()">Editar</button>
         
     </form>
-    <h3>Lista de Vendedores</h3>
+    <h3>Lista de Estados</h3>
     <div class="table-responsive">
         <table class="table table-hover" >
             <thead>

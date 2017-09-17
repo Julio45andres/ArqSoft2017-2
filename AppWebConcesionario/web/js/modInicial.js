@@ -18,6 +18,10 @@ angular.module('modInicial',['ngRoute']).config(
             templateUrl:'Estado.jsp',
             controller:'ctrEstado'
         }).
+        when('/marcas',{
+            templateUrl:'Marca.jsp',
+            controller:'ctrMarca'
+        }).
         otherwise({
             templateUrl:'Cliente.jsp',
             controller:'ctrCliente'
@@ -51,6 +55,17 @@ service('$srv',function($http){
         return $http({
                 method:'POST',
                 url:'EstadoServlet',
+                params:datos,
+                headers:{
+                    'Content-type':'application/json'
+                }
+        });
+    }
+    
+    this.marcas=function(datos){
+        return $http({
+                method:'POST',
+                url:'MarcaServlet',
                 params:datos,
                 headers:{
                     'Content-type':'application/json'
@@ -225,4 +240,60 @@ controller('ctrEstado',function($scope,$srv){
     }
     
     $scope.get();
-})        
+}).
+controller('ctrMarca',function($scope,$srv){
+    $scope.marca={};    
+    
+    $scope.listMarcas=[];
+    
+    $scope.response=undefined;
+    
+    $scope.get=function(){
+        var data={method:'GET'}
+        $srv.marcas(data).then(
+        function(res){
+            $scope.listMarcas=res.data;
+        },function(err){
+            console.log(err);
+        })
+    }
+    
+    $scope.post=function(){
+        $scope.marca.method='POST';
+        $srv.marcas($scope.marca).then(
+        function(res){
+            $scope.response=res.data;
+            $scope.get();
+        },function(err){
+            console.log(err);
+        })
+    }
+    
+    $scope.put=function(){
+        $scope.marca.method='PUT';
+        $srv.marcas($scope.marca).then(
+        function(res){
+            $scope.response=res.data;
+            $scope.get();
+        },function(err){
+            console.log(err);
+        })
+    }
+    
+    $scope.edit=function(item){
+        $scope.marca=item;
+    }
+    
+    $scope.remove=function(item){
+        item.method='DELETE';
+        $srv.marcas(item).then(
+        function(res){
+            $scope.response=res.data;
+            $scope.get();
+        },function(err){
+            console.log(err);
+        })
+    }
+    
+    $scope.get();
+}) 
