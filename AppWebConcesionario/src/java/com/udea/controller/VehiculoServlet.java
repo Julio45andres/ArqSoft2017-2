@@ -5,8 +5,10 @@
  */
 package com.udea.controller;
 
+import com.udea.dao.VehiculoFacadeLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +19,9 @@ import javax.servlet.http.HttpServletResponse;
  * @author Administrador
  */
 public class VehiculoServlet extends HttpServlet {
+
+    @EJB
+    private VehiculoFacadeLocal vehiculoFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

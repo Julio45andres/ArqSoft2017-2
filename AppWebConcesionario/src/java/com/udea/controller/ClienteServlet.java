@@ -10,6 +10,8 @@ import com.udea.modelo.Cliente;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.io.IOException;
+import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
