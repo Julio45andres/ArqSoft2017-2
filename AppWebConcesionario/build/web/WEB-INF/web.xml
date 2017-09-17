@@ -1,9 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-	 version="3.1">
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <servlet>
+        <servlet-name>ClienteServlet</servlet-name>
+        <servlet-class>com.udea.controller.ClienteServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>VehiculoServlet</servlet-name>
+        <servlet-class>com.udea.controller.VehiculoServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CompraServlet</servlet-name>
+        <servlet-class>com.udea.controller.CompraServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MarcaServlet</servlet-name>
+        <servlet-class>com.udea.controller.MarcaServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EstadoServlet</servlet-name>
+        <servlet-class>com.udea.controller.EstadoServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TipoPagoServlet</servlet-name>
+        <servlet-class>com.udea.controller.TipoPagoServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>VendedorServlet</servlet-name>
+        <servlet-class>com.udea.controller.VendedorServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ClienteServlet</servlet-name>
+        <url-pattern>/ClienteServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VehiculoServlet</servlet-name>
+        <url-pattern>/VehiculoServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CompraServlet</servlet-name>
+        <url-pattern>/CompraServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MarcaServlet</servlet-name>
+        <url-pattern>/MarcaServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EstadoServlet</servlet-name>
+        <url-pattern>/EstadoServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TipoPagoServlet</servlet-name>
+        <url-pattern>/TipoPagoServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VendedorServlet</servlet-name>
+        <url-pattern>/VendedorServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
