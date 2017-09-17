@@ -24,7 +24,7 @@
         <li class="active"><a href="#!clientes">Clientes <span class="sr-only">(current)</span></a></li>
         <li><a href="#">Compra</a></li>
         <li><a href="#">Vehiculo</a></li>
-        <li><a href="#">Vendedor</a></li>
+        <li><a href="#!vendedores">Vendedor</a></li>
         
       </ul>
       <ul class="nav navbar-nav navbar-right">

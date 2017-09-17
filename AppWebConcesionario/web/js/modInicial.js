@@ -10,6 +10,10 @@ angular.module('modInicial',['ngRoute']).config(
             templateUrl:'Cliente.jsp',
             controller:'ctrCliente'
         }).
+        when('/vendedores',{
+            templateUrl:'Vendedor.jsp',
+            controller:'ctrVendedor'
+        }).
         otherwise({
             templateUrl:'Cliente.jsp',
             controller:'ctrCliente'
@@ -21,6 +25,17 @@ service('$srv',function($http){
         return $http({
                 method:'POST',
                 url:'ClienteServlet',
+                params:datos,
+                headers:{
+                    'Content-type':'application/json'
+                }
+        });
+    }
+    
+    this.vendedores=function(datos){
+        return $http({
+                method:'POST',
+                url:'VendedorServlet',
                 params:datos,
                 headers:{
                     'Content-type':'application/json'
@@ -84,4 +99,59 @@ controller('ctrCliente',function($scope,$srv){
     }
     
     $scope.getClientes();
+}).
+controller('ctrVendedor',function($scope,$srv){
+    $scope.vendedor={};    
+    
+    $scope.listVendedores=[];
+    
+    $scope.response=undefined;
+    
+    $scope.get=function(){
+        var data={method:'GET'}
+        $srv.vendedores(data).then(
+        function(res){
+            $scope.listVendedores=res.data;
+        },function(err){
+            console.log(err);
+        })
+    }
+    
+    $scope.post=function(){
+        $scope.vendedor.method='POST';
+        $srv.vendedores($scope.vendedor).then(
+        function(res){
+            $scope.response=res.data;
+            $scope.get();
+        },function(err){
+            console.log(err);
+        })
+    }
+    $scope.put=function(){
+        $scope.vendedor.method='PUT';
+        $srv.vendedores($scope.vendedor).then(
+        function(res){
+            $scope.response=res.data;
+            $scope.get();
+        },function(err){
+            console.log(err);
+        })
+    }
+    
+    $scope.edit=function(item){
+        $scope.vendedor=item;
+    }
+    
+    $scope.remove=function(item){
+        item.method='DELETE';
+        $srv.vendedores(item).then(
+        function(res){
+            $scope.response=res.data;
+            $scope.get();
+        },function(err){
+            console.log(err);
+        })
+    }
+    
+    $scope.get();
 })

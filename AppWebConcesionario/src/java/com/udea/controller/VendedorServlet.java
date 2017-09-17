@@ -6,8 +6,10 @@
 package com.udea.controller;
 
 import com.udea.dao.VendedorFacadeLocal;
+import com.udea.modelo.Vendedor;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -34,18 +36,56 @@ public class VendedorServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet VendedorServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet VendedorServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        response.setContentType("application/json;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        String json="";
+        try{
+            String method=request.getParameter("method");
+            
+            if(method.equals("GET")){
+                List<Vendedor>  vendedores=vendedorFacade.findAll();
+                //response.getWriter().write("{\"nombre\":\"hola\"}");
+                json="[";
+                for (Vendedor vendedor : vendedores) {
+                    json+="{";
+                    json+="\"id\":\""+vendedor.getId()+"\",";
+                    json+="\"nombre\":\""+vendedor.getNombre()+"\",";
+                    json+="\"apellidos\":\""+vendedor.getApellidos()+"\"";
+                    json+="},";
+                }
+                json=json.substring(0, json.length()-1);
+                json+="]";
+                //response.getWriter().write(strClientes);           
+            }
+            else if(method.equals("POST") || method.equals("PUT")){
+                Vendedor vendedor=new Vendedor();
+                vendedor.setId(request.getParameter("id"));
+                vendedor.setNombre(request.getParameter("nombre"));
+                vendedor.setApellidos(request.getParameter("apellidos"));               
+                if(method.equals("POST")){
+                    vendedorFacade.create(vendedor);
+                    json="{\"estado\":true,\"msj\":\"Vendedor creado correctamente\"}";
+                }
+                else{
+                    vendedorFacade.edit(vendedor);
+                    json="{\"estado\":true,\"msj\":\"Vendedor actualizado correctamente\"}";
+                }
+                
+            }
+            else if(method.equals("DELETE")){
+                Vendedor vendedor=new Vendedor();
+                vendedor.setId(request.getParameter("id").trim());
+                vendedorFacade.remove(vendedor);
+            }
+            else{
+                json="{\"estado\":true,\"msj\":\"Opción no valida\"}";
+            }
+        }
+        catch(Exception e){
+            json="{\"estado\":false,\"msj\":\""+e.getMessage()+"\"}";
+        }
+        finally{
+            response.getWriter().write(json);
         }
     }
 

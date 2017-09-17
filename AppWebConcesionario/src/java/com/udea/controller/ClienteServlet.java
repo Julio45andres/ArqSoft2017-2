@@ -88,7 +88,7 @@ public class ClienteServlet extends HttpServlet {
                 clienteFacade.remove(cliente);
             }
             else{
-                strClientes="{\"estado\":true,\"msj\":\"prueba\"}";
+                strClientes="{\"estado\":true,\"msj\":\"Opción no valida\"}";
             }
         }
         catch(Exception e){
