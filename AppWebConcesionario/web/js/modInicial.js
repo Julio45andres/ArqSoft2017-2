@@ -14,6 +14,10 @@ angular.module('modInicial',['ngRoute']).config(
             templateUrl:'Vendedor.jsp',
             controller:'ctrVendedor'
         }).
+        when('/estados',{
+            templateUrl:'Estado.jsp',
+            controller:'ctrEstado'
+        }).
         otherwise({
             templateUrl:'Cliente.jsp',
             controller:'ctrCliente'
@@ -36,6 +40,17 @@ service('$srv',function($http){
         return $http({
                 method:'POST',
                 url:'VendedorServlet',
+                params:datos,
+                headers:{
+                    'Content-type':'application/json'
+                }
+        });
+    }
+    
+    this.estados=function(datos){
+        return $http({
+                method:'POST',
+                url:'EstadoServlet',
                 params:datos,
                 headers:{
                     'Content-type':'application/json'
@@ -154,4 +169,60 @@ controller('ctrVendedor',function($scope,$srv){
     }
     
     $scope.get();
-})
+}).
+controller('ctrEstado',function($scope,$srv){
+    $scope.estado={};    
+    
+    $scope.listEstados=[];
+    
+    $scope.response=undefined;
+    
+    $scope.get=function(){
+        var data={method:'GET'}
+        $srv.estados(data).then(
+        function(res){
+            $scope.listEstados=res.data;
+        },function(err){
+            console.log(err);
+        })
+    }
+    
+    $scope.post=function(){
+        $scope.estado.method='POST';
+        $srv.estados($scope.estado).then(
+        function(res){
+            $scope.response=res.data;
+            $scope.get();
+        },function(err){
+            console.log(err);
+        })
+    }
+    
+    $scope.put=function(){
+        $scope.estado.method='PUT';
+        $srv.estados($scope.estado).then(
+        function(res){
+            $scope.response=res.data;
+            $scope.get();
+        },function(err){
+            console.log(err);
+        })
+    }
+    
+    $scope.edit=function(item){
+        $scope.estado=item;
+    }
+    
+    $scope.remove=function(item){
+        item.method='DELETE';
+        $srv.estados(item).then(
+        function(res){
+            $scope.response=res.data;
+            $scope.get();
+        },function(err){
+            console.log(err);
+        })
+    }
+    
+    $scope.get();
+})        

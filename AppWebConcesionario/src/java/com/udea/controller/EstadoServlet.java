@@ -6,8 +6,10 @@
 package com.udea.controller;
 
 import com.udea.dao.EstadoFacadeLocal;
+import com.udea.modelo.Estado;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -34,18 +36,56 @@ public class EstadoServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet EstadoServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet EstadoServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        response.setContentType("application/json;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        String json="";
+        try{
+            String method=request.getParameter("method");
+            
+            if(method.equals("GET")){
+                List<Estado>  estados=estadoFacade.findAll();
+                
+                json="[";
+                for (Estado estado: estados) {
+                    json+="{";
+                    json+="\"codigo\":\""+estado.getCodigo()+"\",";
+                    json+="\"descripcion\":\""+estado.getDescripcion()+"\",";
+                    json+="\"estado\":\""+estado.getEstado()+"\"";
+                    json+="},";
+                }
+                json=json.substring(0, json.length()-1);
+                json+="]";
+                //response.getWriter().write(strClientes);           
+            }
+            else if(method.equals("POST") || method.equals("PUT")){
+                Estado estado=new Estado();
+                estado.setCodigo(request.getParameter("codigo"));
+                estado.setDescripcion(request.getParameter("descripcion"));
+                estado.setEstado(request.getParameter("estado"));               
+                if(method.equals("POST")){
+                    estadoFacade.create(estado);
+                    json="{\"estado\":true,\"msj\":\"Estado creado correctamente\"}";
+                }
+                else{
+                    estadoFacade.edit(estado);
+                    json="{\"estado\":true,\"msj\":\"Estado actualizado correctamente\"}";
+                }
+                
+            }
+            else if(method.equals("DELETE")){
+                Estado estado=new Estado();
+                estado.setCodigo(request.getParameter("codigo").trim());
+                estadoFacade.remove(estado);
+            }
+            else{
+                json="{\"estado\":true,\"msj\":\"Opción no valida\"}";
+            }
+        }
+        catch(Exception e){
+            json="{\"estado\":false,\"msj\":\""+e.getMessage()+"\"}";
+        }
+        finally{
+            response.getWriter().write(json);
         }
     }
 
