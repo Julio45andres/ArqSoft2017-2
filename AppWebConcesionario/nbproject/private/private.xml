@@ -3,17 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/AppWebConcesionario/web/WEB-INF/glassfish-resources.xml</file>
-            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/AppWebConcesionario/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/AppWebConcesionario/src/conf/persistence.xml</file>
-=======
-            <file>file:/C:/Users/César/Desktop/ArqSoft2017-2/AppWebConcesionario/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/César/Desktop/ArqSoft2017-2/AppWebConcesionario/src/conf/persistence.xml</file>
-            <file>file:/C:/Users/César/Desktop/ArqSoft2017-2/AppWebConcesionario/web/index.html</file>
-            <file>file:/C:/Users/César/Desktop/ArqSoft2017-2/AppWebConcesionario/web/js/modInicial.js</file>
-            <file>file:/C:/Users/César/Desktop/ArqSoft2017-2/AppWebConcesionario/web/WEB-INF/glassfish-resources.xml</file>
->>>>>>> a4d3be93d60bfd4dd556e3e4159158577c119668
+            <file>file:/C:/Users/César/Desktop/Arquitectura/ArqSoft2017-2/AppWebConcesionario/src/java/com/udea/controller/ClienteServlet.java</file>
+            <file>file:/C:/Users/César/Desktop/Arquitectura/ArqSoft2017-2/AppWebConcesionario/src/java/com/udea/controller/EstadoServlet.java</file>
         </group>
     </open-files>
 </project-private>

@@ -5,8 +5,12 @@
  */
 package com.udea.controller;
 
+import com.udea.dao.ClienteFacadeLocal;
+import com.udea.modelo.Cliente;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +21,9 @@ import javax.servlet.http.HttpServletResponse;
  * @author Administrador
  */
 public class ClienteServlet extends HttpServlet {
+
+    @EJB
+    private ClienteFacadeLocal clienteFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,18 +36,64 @@ public class ClienteServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ClienteServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ClienteServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        response.setContentType("application/json;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        String strClientes="";
+        try{
+            String method=request.getParameter("method");
+            
+            if(method.equals("GET")){
+                List<Cliente>  clientes=clienteFacade.findAll();
+                //response.getWriter().write("{\"nombre\":\"hola\"}");
+                strClientes="[";
+                for (Cliente cliente : clientes) {
+                    strClientes+="{";
+                    strClientes+="\"id\":\""+cliente.getId()+"\",";
+                    strClientes+="\"nombre\":\""+cliente.getNombre()+"\",";
+                    strClientes+="\"apellidos\":\""+cliente.getApellidos()+"\",";
+                    strClientes+="\"direccion\":\""+cliente.getDireccion()+"\",";
+                    strClientes+="\"email\":\""+cliente.getEmail()+"\",";
+                    strClientes+="\"telefono\":\""+cliente.getTelefono()+"\",";
+                    strClientes+="\"celular\":\""+cliente.getCelular()+"\"";
+                    strClientes+="},";
+                }
+                strClientes=strClientes.substring(0, strClientes.length()-1);
+                strClientes+="]";
+                //response.getWriter().write(strClientes);           
+            }
+            else if(method.equals("POST") || method.equals("PUT")){
+                Cliente cliente=new Cliente();
+                cliente.setId(request.getParameter("id"));
+                cliente.setNombre(request.getParameter("nombre"));
+                cliente.setApellidos(request.getParameter("apellidos"));
+                cliente.setDireccion(request.getParameter("direccion"));
+                cliente.setCelular(request.getParameter("celular"));
+                cliente.setEmail(request.getParameter("email"));
+                cliente.setTelefono(request.getParameter("telefono"));
+                if(method.equals("POST")){
+                    clienteFacade.create(cliente);
+                    strClientes="{\"estado\":true,\"msj\":\"Cliente creado correctamente\"}";
+                }
+                else{
+                    clienteFacade.edit(cliente);
+                    strClientes="{\"estado\":true,\"msj\":\"Cliente actualizado correctamente\"}";
+                }
+                
+            }
+            else if(method.equals("DELETE")){
+                Cliente cliente=new Cliente();
+                cliente.setId(request.getParameter("id").trim());
+                clienteFacade.remove(cliente);
+            }
+            else{
+                strClientes="{\"estado\":true,\"msj\":\"prueba\"}";
+            }
+        }
+        catch(Exception e){
+            strClientes="{\"estado\":false,\"msj\":\""+e.getMessage()+"\"}";
+        }
+        finally{
+            response.getWriter().write(strClientes);
         }
     }
 
