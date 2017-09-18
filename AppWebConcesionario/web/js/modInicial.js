@@ -25,7 +25,15 @@ angular.module('modInicial',['ngRoute']).config(
         when('/tipoPagos',{
             templateUrl:'TipoPago.jsp',
             controller:'ctrTipoPago'
-        }).                
+        }).
+        when('/vehiculos',{
+            templateUrl:'Vehiculo.jsp',
+            controller:'ctrVehiculo'
+        }).
+        when('/compras',{
+            templateUrl:'Compra.jsp',
+            controller:'ctrCompra'
+        }).
         otherwise({
             templateUrl:'Cliente.jsp',
             controller:'ctrCliente'
@@ -87,8 +95,44 @@ service('$srv',function($http){
                 }
         });
     }
+    
+    this.vehiculos=function(datos){
+        return $http({
+                method:'POST',
+                url:'VehiculoServlet',
+                params:datos,
+                headers:{
+                    'Content-type':'application/json'
+                }
+        });
+    }
+    
+    this.compras=function(datos){
+        return $http({
+                method:'POST',
+                url:'CompraServlet',
+                params:datos,
+                headers:{
+                    'Content-type':'application/json'
+                }
+        });
+    }
             
 }).
+directive('uploaderModel',['$parse',function($parse){
+    return {
+        restrict:'A',
+        link:function(scope,iElement,iAttrs)
+        {
+            iElement.on('change',function(e)
+            {
+                //console.log(iElement[0].files)
+                $parse(iAttrs.uploaderModel).assign(scope,iElement[0].files[0]);
+                //$parse(iAttrs.uploaderModel).assign(scope,iElement[0].files[1]);
+            });
+        }
+    }
+}]).
 controller('ctrCliente',function($scope,$srv){
     $scope.cliente={};    
     
@@ -365,6 +409,170 @@ controller('ctrTipoPago',function($scope,$srv){
             console.log(err);
         })
     }
+    
+    $scope.get();
+}).
+controller('ctrVehiculo',function($scope,$srv,$http){
+    $scope.vehiculo={};    
+    
+    $scope.listVehiculos=[];
+    
+    $scope.response=undefined;
+    
+    $scope.get=function(){
+        var data={method:'GET'}
+        $srv.vehiculos(data).then(
+        function(res){
+            $scope.listVehiculos=res.data;
+        },function(err){
+            console.log(err);
+        })
+    }
+    
+    $scope.post=function(){
+        $scope.vehiculo.method='POST';
+        $srv.vehiculos($scope.vehiculo).then(
+        function(res){
+            $scope.response=res.data;
+            $scope.get();
+        },function(err){
+            console.log(err);
+        })
+    }
+    
+    $scope.adjuntar=function(){
+        var formData=new FormData();
+        formData.append("foto",$scope.foto);
+        
+        $http({
+            method:'POST',
+            url:'VehiculoServlet',
+            data:formData,
+            params:{method:"POST"},
+            headers:{"Content-type":undefined},
+            transformRequest:angular.indentity
+        })
+    }
+    
+    $scope.put=function(){
+        $scope.vehiculo.method='PUT';
+        $srv.vehiculos($scope.vehiculo).then(
+        function(res){
+            $scope.response=res.data;
+            $scope.get();
+        },function(err){
+            console.log(err);
+        })
+    }
+    
+    $scope.edit=function(item){
+        $scope.vehiculo=item;
+    }
+    
+    $scope.remove=function(item){
+        item.method='DELETE';
+        $srv.vehiculos(item).then(
+        function(res){
+            $scope.response=res.data;
+            $scope.get();
+        },function(err){
+            console.log(err);
+        })
+    }
+    
+    $scope.get();
+}).
+controller('ctrCompra',function($scope,$srv){
+    $scope.compra={};    
+    
+    $scope.listCompras=[];
+    
+    $scope.listTipoPagos=[];
+    
+    $scope.listClientes=[];
+    
+    $scope.listVendedores=[];
+    
+    $scope.listVehiculos=[];
+    
+    $scope.response=undefined;
+    
+    $scope.get=function(){
+        var data={method:'GET'}
+        $srv.compras(data).then(
+        function(res){
+            $scope.listCompras=res.data;
+        },function(err){
+            console.log(err);
+        })
+    }
+    
+    $scope.post=function(){
+        $scope.compra.method='POST';
+        $srv.compras($scope.compra).then(
+        function(res){
+            $scope.response=res.data;
+            $scope.get();
+        },function(err){
+            console.log(err);
+        })
+    }
+    
+    $scope.put=function(){
+        $scope.compra.method='PUT';
+        $srv.compras($scope.compra).then(
+        function(res){
+            $scope.response=res.data;
+            $scope.get();
+        },function(err){
+            console.log(err);
+        })
+    }
+    
+    $scope.edit=function(item){
+        $scope.compra=item;
+    }
+    
+    $scope.remove=function(item){
+        item.compra='DELETE';
+        $srv.compras(item).then(
+        function(res){
+            $scope.response=res.data;
+            $scope.get();
+        },function(err){
+            console.log(err);
+        })
+    }
+    
+    
+    $srv.tipoPagos({method:'GET'}).then(
+        function(res){
+            $scope.listTipoPagos=res.data;
+        },function(err){
+            console.log(err);
+        })
+        
+    $srv.clientes({method:'GET'}).then(
+        function(res){
+            $scope.listClientes=res.data;
+            console.log(res);
+        },function(err){
+            console.log(err);
+        })
+ 
+    $srv.vendedores({method:'GET'}).then(
+        function(res){
+            $scope.listVendedores=res.data;
+        },function(err){
+            console.log(err);
+        })
+        
+    $srv.vehiculos({method:'GET'}).then(
+        function(res){
+            $scope.listVehiculos=res.data;
+        },function(err){
+            console.log(err);
+        })
     
     $scope.get();
 })

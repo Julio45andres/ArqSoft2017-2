@@ -22,8 +22,8 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="active"><a href="#!clientes">Clientes <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Compra</a></li>
-        <li><a href="#">Vehiculo</a></li>
+        <li><a href="#!compras">Compra</a></li>
+        <li><a href="#!vehiculos">Vehiculo</a></li>
         <li><a href="#!estados">Estados</a></li>
         <li><a href="#!marcas">Marcas</a></li>
         <li><a href="#!vendedores">Vendedores</a></li>
