@@ -73,7 +73,7 @@ public class VehiculoServlet extends HttpServlet {
                 json+="]";
                 //response.getWriter().write(strClientes);           
             }
-            else if(method.equals("POST") || method.equals("PUT")){
+            else if(method.equals("POST") || method.equals("PUT") || method.equals("DELETE")){
                 Part foto=request.getPart("foto");
                 
                 /*
@@ -101,17 +101,15 @@ public class VehiculoServlet extends HttpServlet {
                     vehiculoFacade.create(vehiculo);
                     json="{\"estado\":true,\"msj\":\"Vehiculo creado correctamente\"}";
                 }
-                else{
+                else if(method.equals("PUT")){
                     vehiculoFacade.edit(vehiculo);
                     json="{\"estado\":true,\"msj\":\"Vehiculo actualizado correctamente\"}";
                 }
-                
-            }
-            else if(method.equals("DELETE")){
-                Vehiculo vehiculo=new Vehiculo();
-                vehiculo.setMatricula(request.getParameter("matricula").trim());
-                vehiculoFacade.remove(vehiculo);
-            }
+                else if(method.equals("DELETE")){                    
+                    vehiculoFacade.remove(vehiculo);
+                    json="{\"estado\":true,\"msj\":\"Vehiculo eliminado correctamente\"}";
+                }
+            }            
             else{
                 json="{\"estado\":true,\"msj\":\"Opción no valida\"}";
             }

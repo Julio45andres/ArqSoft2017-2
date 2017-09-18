@@ -57,7 +57,7 @@ public class VendedorServlet extends HttpServlet {
                 json+="]";
                 //response.getWriter().write(strClientes);           
             }
-            else if(method.equals("POST") || method.equals("PUT")){
+            else if(method.equals("POST") || method.equals("PUT") || method.equals("DELETE")){
                 Vendedor vendedor=new Vendedor();
                 vendedor.setId(request.getParameter("id"));
                 vendedor.setNombre(request.getParameter("nombre"));
@@ -66,17 +66,15 @@ public class VendedorServlet extends HttpServlet {
                     vendedorFacade.create(vendedor);
                     json="{\"estado\":true,\"msj\":\"Vendedor creado correctamente\"}";
                 }
-                else{
+                else if(method.equals("PUT")){
                     vendedorFacade.edit(vendedor);
                     json="{\"estado\":true,\"msj\":\"Vendedor actualizado correctamente\"}";
                 }
-                
-            }
-            else if(method.equals("DELETE")){
-                Vendedor vendedor=new Vendedor();
-                vendedor.setId(request.getParameter("id").trim());
-                vendedorFacade.remove(vendedor);
-            }
+                else if(method.equals("DELETE")){                   
+                    vendedorFacade.remove(vendedor);
+                    json="{\"estado\":true,\"msj\":\"Vendedor eliminado correctamente\"}";
+                }
+            }            
             else{
                 json="{\"estado\":true,\"msj\":\"Opción no valida\"}";
             }

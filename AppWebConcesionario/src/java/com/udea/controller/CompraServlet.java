@@ -65,7 +65,7 @@ public class CompraServlet extends HttpServlet {
                 json+="]";
                 //response.getWriter().write(strClientes);           
             }
-            else if(method.equals("POST") || method.equals("PUT")){
+            else if(method.equals("POST") || method.equals("PUT") || method.equals("DELETE")){
                 Compra compra=new Compra();
                 compra.setCodigo(request.getParameter("codigo"));                
                 compra.setFechaCompra(new Date(request.getParameter("fechaCompra")));
@@ -78,17 +78,15 @@ public class CompraServlet extends HttpServlet {
                     compraFacade.create(compra);
                     json="{\"estado\":true,\"msj\":\"Compra creado correctamente\"}";
                 }
-                else{
+                else if(method.equals("PUT")){
                     compraFacade.edit(compra);
                     json="{\"estado\":true,\"msj\":\"Compra actualizado correctamente\"}";
                 }
-                
-            }
-            else if(method.equals("DELETE")){
-                Compra compra=new Compra();
-                compra.setCodigo(request.getParameter("codigo").trim());
-                compraFacade.remove(compra);
-            }
+                else if(method.equals("DELETE")){                    
+                    compraFacade.remove(compra);
+                    json="{\"estado\":true,\"msj\":\"Compra eliminada correctamente\"}";
+                }                
+            }            
             else{
                 json="{\"estado\":true,\"msj\":\"Opción no valida\"}";
             }

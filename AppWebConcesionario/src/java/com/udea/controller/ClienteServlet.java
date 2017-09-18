@@ -63,7 +63,7 @@ public class ClienteServlet extends HttpServlet {
                 strClientes+="]";
                 //response.getWriter().write(strClientes);           
             }
-            else if(method.equals("POST") || method.equals("PUT")){
+            else if(method.equals("POST") || method.equals("PUT") || method.equals("DELETE")){
                 Cliente cliente=new Cliente();
                 cliente.setId(request.getParameter("id"));
                 cliente.setNombre(request.getParameter("nombre"));
@@ -76,17 +76,16 @@ public class ClienteServlet extends HttpServlet {
                     clienteFacade.create(cliente);
                     strClientes="{\"estado\":true,\"msj\":\"Cliente creado correctamente\"}";
                 }
-                else{
+                else if(method.equals("PUT")){
                     clienteFacade.edit(cliente);
                     strClientes="{\"estado\":true,\"msj\":\"Cliente actualizado correctamente\"}";
                 }
+                else if(method.equals("DELETE")){
+                    clienteFacade.remove(cliente);
+                    strClientes="{\"estado\":true,\"msj\":\"Cliente eliminado correctamente\"}";
+                }
                 
-            }
-            else if(method.equals("DELETE")){
-                Cliente cliente=new Cliente();
-                cliente.setId(request.getParameter("id").trim());
-                clienteFacade.remove(cliente);
-            }
+            }            
             else{
                 strClientes="{\"estado\":true,\"msj\":\"Opción no valida\"}";
             }

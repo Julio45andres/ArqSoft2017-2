@@ -145,7 +145,6 @@ controller('ctrCliente',function($scope,$srv){
         $srv.clientes(data).then(
         function(res){
             $scope.listClientes=res.data;
-            console.log(res);
         },function(err){
             console.log(err);
         })
@@ -555,7 +554,6 @@ controller('ctrCompra',function($scope,$srv){
     $srv.clientes({method:'GET'}).then(
         function(res){
             $scope.listClientes=res.data;
-            console.log(res);
         },function(err){
             console.log(err);
         })
@@ -576,3 +574,30 @@ controller('ctrCompra',function($scope,$srv){
     
     $scope.get();
 })
+
+$(function(){
+    var menu=document.getElementById("menu");
+    var liMenu=menu.childNodes;
+    for(var i in liMenu){
+        if(liMenu[i].nodeName=='LI'){
+            liMenu[i].onclick=function(){
+                controlMenu(this)
+            }
+        }
+    }
+});
+
+function controlMenu(id){
+    var menu=document.getElementById("menu");
+    var liMenu=menu.childNodes;
+    
+    for(var i in liMenu){
+        if(liMenu[i].nodeName=='LI'){
+            if(liMenu[i].className=='active'){
+                liMenu[i].className='';
+                break;
+            }
+        }
+    }
+    id.className="active";
+}
