@@ -7,6 +7,12 @@
     <servlet>
         <servlet-name>VehiculoServlet</servlet-name>
         <servlet-class>com.udea.controller.VehiculoServlet</servlet-class>
+        <multipart-config>
+            <location>D:\Cesar</location>
+            <max-file-size>20848820</max-file-size>
+            <max-request-size>418018841</max-request-size>
+            <file-size-threshold>1048576</file-size-threshold>
+        </multipart-config>
     </servlet>
     <servlet>
         <servlet-name>CompraServlet</servlet-name>
@@ -27,6 +33,10 @@
     <servlet>
         <servlet-name>VendedorServlet</servlet-name>
         <servlet-class>com.udea.controller.VendedorServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FotoServlet</servlet-name>
+        <servlet-class>com.udea.controller.FotoServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ClienteServlet</servlet-name>
@@ -55,6 +65,10 @@
     <servlet-mapping>
         <servlet-name>VendedorServlet</servlet-name>
         <url-pattern>/VendedorServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FotoServlet</servlet-name>
+        <url-pattern>/FotoServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

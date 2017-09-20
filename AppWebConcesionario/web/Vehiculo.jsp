@@ -12,57 +12,66 @@
         <h3>Crear/Editar Vehiculo</h3>
         <div class="row">
             <div class="col-md-6">
-                <div class="form-group">
-                    <label>Matricula:</label>
-                    <input type="text" class="form-control" ng-model="vehiculo.matricula" placeholder="Matricula">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Matricula:</label>
+                            <input type="text" class="form-control" ng-model="vehiculo.matricula" placeholder="Matricula" maxlength="12">
+                        </div>
+                    </div>      
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Modelo:</label>
+                            <input type="text" class="form-control" ng-model="vehiculo.modelo" placeholder="Modelo" maxlength="10">
+                        </div>
+                    </div>
                 </div>
-            </div>      
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Marca:</label>
+                            <input type="text" class="form-control" ng-model="vehiculo.marca" placeholder="Marca">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Estado:</label>
+                            <input type="text" class="form-control" ng-model="vehiculo.estado" placeholder="Estado">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Color:</label>
+                            <input type="text" class="form-control" ng-model="vehiculo.color" placeholder="Color" maxlength="20">
+                        </div>
+                    </div>
+                    <div class="col-md-6">            
+                        <div class="form-group">
+                            <label>Precio Venta:</label>
+                            <input type="text" class="form-control" ng-model="vehiculo.precioVenta" placeholder="Precio Venta" maxlength="25">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-default" ng-click="post()">Crear</button>
+                        <button type="button" class="btn btn-default" ng-click="put()">Editar</button>
+                    </div>
+                </div>
+            </div>
             <div class="col-md-6">
-                <div class="form-group">
-                    <label>Modelo:</label>
-                    <input type="text" class="form-control" ng-model="vehiculo.modelo" placeholder="Modelo">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Marca:</label>
-                    <input type="text" class="form-control" ng-model="vehiculo.marca" placeholder="Marca">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Estado:</label>
-                    <input type="text" class="form-control" ng-model="vehiculo.estado" placeholder="Estado">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label>Color:</label>
-                    <input type="text" class="form-control" ng-model="vehiculo.color" placeholder="Color">
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label>Foto:</label>
-                    <input type="text" class="form-control" ng-model="vehiculo.foto" placeholder="Foto">
-                    <input type="file" class="form-control" uploader-model="foto">
-                    <button type="button" ng-click="adjuntar()" accept="image/*">Adjuntar</button>
-                </div>
-            </div>
-            <div class="col-md-6">            
-                <div class="form-group">
-                    <label>Precio Venta:</label>
-                    <input type="text" class="form-control" ng-model="vehiculo.precioVenta" placeholder="Precio Venta">
-                </div>
+               <div class="form-group">
+                   <label>Foto:</label><br>
+                   <img src="FotoServlet?matricula={{vehiculo.matricula}}" width="300px" height="200px"  align="center"
+                        alt="Foto Vehiculo"><br>
+                   <input type="file" class="form-control" uploader-model="foto">
+               </div>
             </div>
         </div>
         
-        <button type="button" class="btn btn-default" ng-click="post()">Crear</button>
-        <button type="button" class="btn btn-default" ng-click="put()">Editar</button>
+        
 
     </form>
     <br>
@@ -88,7 +97,10 @@
                     <td ng-bind="item.marca"></td>
                     <td ng-bind="item.estado"></td>
                     <td ng-bind="item.color"></td>
-                    <td ng-bind="item.foto"></td>
+                    <td>
+                        <img src="FotoServlet?matricula={{item.matricula}}" width="200px" height="150px"  align="center"
+                                alt="Foto Vehiculo">
+                    </td>
                     <td ng-bind="item.precioVenta"></td>
                     <td>
                         <button type="button" class="btn btn-info btn-xs" ng-click="edit(item)"><span class="glyphicon glyphicon-edit" title="Editar"></span></button>

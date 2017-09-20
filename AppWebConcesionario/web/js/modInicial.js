@@ -428,9 +428,19 @@ controller('ctrVehiculo',function($scope,$srv,$http){
         })
     }
     
-    $scope.post=function(){
+    $scope.post=function(){        
         $scope.vehiculo.method='POST';
-        $srv.vehiculos($scope.vehiculo).then(
+        var formData=new FormData();
+        formData.append("foto",$scope.foto);
+        
+        $http({
+            method:'POST',
+            url:'VehiculoServlet',
+            data:formData,
+            params:$scope.vehiculo,
+            headers:{"Content-type":undefined},
+            transformRequest:angular.indentity
+        }).then(
         function(res){
             $scope.response=res.data;
             $scope.get();
@@ -447,15 +457,33 @@ controller('ctrVehiculo',function($scope,$srv,$http){
             method:'POST',
             url:'VehiculoServlet',
             data:formData,
-            params:{method:"POST"},
+            params:{method:"ADJUNTAR"},
             headers:{"Content-type":undefined},
             transformRequest:angular.indentity
         })
     }
     
     $scope.put=function(){
-        $scope.vehiculo.method='PUT';
+        /*$scope.vehiculo.method='PUT';
         $srv.vehiculos($scope.vehiculo).then(
+        function(res){
+            $scope.response=res.data;
+            $scope.get();
+        },function(err){
+            console.log(err);
+        })*/
+        $scope.vehiculo.method='PUT';
+        var formData=new FormData();
+        formData.append("foto",$scope.foto);
+        
+        $http({
+            method:'POST',
+            url:'VehiculoServlet',
+            data:formData,
+            params:$scope.vehiculo,
+            headers:{"Content-type":undefined},
+            transformRequest:angular.indentity
+        }).then(
         function(res){
             $scope.response=res.data;
             $scope.get();

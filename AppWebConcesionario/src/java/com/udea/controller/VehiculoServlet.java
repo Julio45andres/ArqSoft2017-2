@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.util.Base64;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -23,12 +25,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import sun.misc.IOUtils;
+
 
 /**
  *
  * @author Administrador
  */
-@WebServlet(name = "FileUploadServlet", urlPatterns = {"/upload"})
+//@WebServlet(name = "FileUploadServlet", urlPatterns = {"/upload"})
 @MultipartConfig
 public class VehiculoServlet extends HttpServlet {
 
@@ -55,17 +59,20 @@ public class VehiculoServlet extends HttpServlet {
             String method=request.getParameter("method");
             
             if(method.equals("GET")){
+                
+                
                 List<Vehiculo>  vehiculos=vehiculoFacade.findAll();
                 //response.getWriter().write("{\"nombre\":\"hola\"}");
                 json="[";
                 for (Vehiculo vehiculo : vehiculos) {
+                    //String strFoto = Base64.getEncoder().encodeToString(vehiculo.getFoto());
                     json+="{";
                     json+="\"matricula\":\""+vehiculo.getMatricula()+"\",";
                     json+="\"modelo\":\""+vehiculo.getModelo()+"\",";
                     json+="\"marca\":\""+vehiculo.getMarca()+"\",";
                     json+="\"estado\":\""+vehiculo.getEstado()+"\",";
                     json+="\"color\":\""+vehiculo.getColor()+"\",";
-                    json+="\"foto\":\""+vehiculo.getFoto()+"\",";
+                    //json+="\"foto\":\""+strFoto+"\",";
                     json+="\"precioVenta\":\""+vehiculo.getPrecioVenta()+"\"";
                     json+="},";
                 }
@@ -74,29 +81,30 @@ public class VehiculoServlet extends HttpServlet {
                 //response.getWriter().write(strClientes);           
             }
             else if(method.equals("POST") || method.equals("PUT") || method.equals("DELETE")){
-                Part foto=request.getPart("foto");
                 
-                /*
-                out.print(foto.getName());
-                out.print(foto.getSize());
-                */
-                
-                InputStreamAFile(foto.getInputStream(),"prueba.jpg");
-                /*
-                File file=new File("/upload/prueba.jpg");
-                InputStream targetStream = new FileInputStream(file);
-                file.createNewFile();
-                
-                foto.getInputStream();*/
-                
+                                
                 Vehiculo vehiculo=new Vehiculo();
                 vehiculo.setMatricula(request.getParameter("matricula"));
                 vehiculo.setModelo(request.getParameter("modelo"));
                 vehiculo.setMarca(request.getParameter("marca"));
                 vehiculo.setEstado(request.getParameter("estado"));
                 vehiculo.setColor(request.getParameter("color"));
-                //vehiculo.setFoto(request.getParameter("foto"));
-                //vehiculo.setPrecioVenta(Double.valueOf(request.getParameter("precioVenta")));
+                vehiculo.setPrecioVenta(BigDecimal.valueOf(Double.valueOf(request.getParameter("precioVenta"))));
+                
+                byte[] bytesFoto=null;
+                //if(!method.equals("DELETE")){
+                    Part foto=request.getPart("foto");
+                    //if(foto!=null){
+                        
+                        //foto.write(foto.getSubmittedFileName());                                
+                        bytesFoto = IOUtils.readFully(foto.getInputStream(),-1, true);                
+                        vehiculo.setFoto(bytesFoto);
+                    /*}
+                    else{
+                        vehiculo.setFoto(vehiculoFacade.find(vehiculo.getMatricula()).getFoto());
+                    }*/
+                //}
+                
                 if(method.equals("POST")){
                     vehiculoFacade.create(vehiculo);
                     json="{\"estado\":true,\"msj\":\"Vehiculo creado correctamente\"}";
@@ -109,7 +117,11 @@ public class VehiculoServlet extends HttpServlet {
                     vehiculoFacade.remove(vehiculo);
                     json="{\"estado\":true,\"msj\":\"Vehiculo eliminado correctamente\"}";
                 }
-            }            
+            }
+            else if(method.equals("ADJUNTAR")){
+                Part foto=request.getPart("foto");                                
+                foto.write(foto.getSubmittedFileName());                
+            }
             else{
                 json="{\"estado\":true,\"msj\":\"Opción no valida\"}";
             }
@@ -124,22 +136,7 @@ public class VehiculoServlet extends HttpServlet {
             response.getWriter().write(json);
         }
     }
-    public void InputStreamAFile(InputStream entrada,String ruta){
-        try{
-          File f=new File("c:\\"+ruta);//Aqui le dan el nombre y/o con la ruta del archivo salida
-          OutputStream salida=new FileOutputStream(f);
-          byte[] buf =new byte[1024];//Actualizado me olvide del 1024
-       int len;
-          while((len=entrada.read(buf))>0){
-             salida.write(buf,0,len);
-          }
-          salida.close();
-          entrada.close();
-          System.out.println("Se realizo la conversion con exito");
-         }catch(IOException e){
-           System.out.println("Se produjo el error : "+e.toString());
-         }
-    }
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
