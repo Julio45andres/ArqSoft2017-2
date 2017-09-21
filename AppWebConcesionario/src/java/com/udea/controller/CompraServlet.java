@@ -41,14 +41,12 @@ public class CompraServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
-        PrintWriter out = response.getWriter();
         String json="";
         try{
             String method=request.getParameter("method");
             
             if(method.equals("GET")){
                 List<Compra>  compras=compraFacade.findAll();
-                //response.getWriter().write("{\"nombre\":\"hola\"}");
                 json="[";
                 for (Compra compra : compras) {
                     json+="{";
@@ -62,10 +60,9 @@ public class CompraServlet extends HttpServlet {
                     json+="},";
                 }
                 json=json.substring(0, json.length()-1);
-                json+="]";
-                //response.getWriter().write(strClientes);           
+                json+="]";     
             }
-            else if(method.equals("POST") || method.equals("PUT") || method.equals("DELETE")){
+            else if(method.equals("POST") || method.equals("PUT")){
                 Compra compra=new Compra();
                 compra.setCodigo(request.getParameter("codigo"));                
                 compra.setFechaCompra(new Date(request.getParameter("fechaCompra")));
@@ -81,12 +78,14 @@ public class CompraServlet extends HttpServlet {
                 else if(method.equals("PUT")){
                     compraFacade.edit(compra);
                     json="{\"estado\":true,\"msj\":\"Compra actualizado correctamente\"}";
-                }
-                else if(method.equals("DELETE")){                    
-                    compraFacade.remove(compra);
-                    json="{\"estado\":true,\"msj\":\"Compra eliminada correctamente\"}";
-                }                
-            }            
+                }             
+            }  
+            else if(method.equals("DELETE")){
+                String codigo=request.getParameter("codigo");
+                Compra compra=compraFacade.find(codigo);
+                compraFacade.remove(compra);
+                json="{\"estado\":true,\"msj\":\"Compra eliminada correctamente\"}";
+            }
             else{
                 json="{\"estado\":true,\"msj\":\"Opción no valida\"}";
             }

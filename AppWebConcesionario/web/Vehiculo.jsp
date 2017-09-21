@@ -30,13 +30,19 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Marca:</label>
-                            <input type="text" class="form-control" ng-model="vehiculo.marca" placeholder="Marca">
+                            <select ng-model="vehiculo.marca" class="form-control">
+                                <option value="">Seleccione</option>
+                                <option ng-repeat="item in listMarcas" ng-value="item.codigo" ng-bind="item.nombreMarca"></option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Estado:</label>
-                            <input type="text" class="form-control" ng-model="vehiculo.estado" placeholder="Estado">
+                            <select ng-model="vehiculo.estado" class="form-control">
+                                <option value="">Seleccione</option>
+                                <option ng-repeat="item in listEstados" ng-value="item.codigo" ng-bind="item.descripcion"></option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -56,17 +62,23 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <button type="button" class="btn btn-default" ng-click="post()">Crear</button>
-                        <button type="button" class="btn btn-default" ng-click="put()">Editar</button>
+                        <button type="button" class="btn btn-default" ng-click="post()"><span class="glyphicon glyphicon-floppy-save"></span> Crear</button>
+                        <button type="button" class="btn btn-default" ng-click="put()"><span class="glyphicon glyphicon-edit"></span> Editar</button>
+                        <button type="button" class="btn btn-default" ng-click="clean()"><span class="glyphicon glyphicon-trash"></span> Limpiar</button>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
                <div class="form-group">
-                   <label>Foto:</label><br>
-                   <img src="FotoServlet?matricula={{vehiculo.matricula}}" width="300px" height="200px"  align="center"
-                        alt="Foto Vehiculo"><br>
-                   <input type="file" class="form-control" uploader-model="foto">
+                   <table style="width:300px;height:200px;margin-bottom: 5px;" border="1" >
+                       <caption>Fotografia:</caption>
+                       <tr>
+                           <td>
+                                <img ng-src="FotoServlet?matricula={{matriculaAux}}" width="300px"height="200px" align="center" alt="Foto Vehiculo">                   
+                           </td>
+                       </tr>        
+                   </table>
+                       <input type="file" class="form-control" uploader-model="foto">
                </div>
             </div>
         </div>
@@ -94,8 +106,8 @@
                 <tr ng-repeat="item in listVehiculos">
                     <td ng-bind="item.matricula"></td>
                     <td ng-bind="item.modelo"></td>
-                    <td ng-bind="item.marca"></td>
-                    <td ng-bind="item.estado"></td>
+                    <td ng-repeat="itemMarca in listMarcas" ng-if="itemMarca.codigo==item.marca" ng-bind="itemMarca.nombreMarca"></td>
+                    <td ng-repeat="itemEstado in listEstados" ng-if="itemEstado.codigo==item.estado" ng-bind="itemEstado.descripcion" width="20%"></td>
                     <td ng-bind="item.color"></td>
                     <td>
                         <img src="FotoServlet?matricula={{item.matricula}}" width="200px" height="150px"  align="center"

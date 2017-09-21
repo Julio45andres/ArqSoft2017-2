@@ -14,13 +14,13 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Codigo:</label>
-                    <input type="text" class="form-control" ng-model="compra.codigo" placeholder="Codigo">
+                    <input type="text" class="form-control" ng-model="compra.codigo" placeholder="Codigo" maxlength="30">
                 </div>
             </div>      
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Fecha Compra:</label>
-                    <input type="text" class="form-control" ng-model="compra.fechaCompra" placeholder="dd/mm/yyyy">
+                    <input type="text" class="form-control" ng-model="compra.fechaCompra" placeholder="dd/mm/yyyy" maxlength="10">
                 </div>
             </div>
         </div>
@@ -37,7 +37,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Descuento:</label>
-                    <input type="text" class="form-control" ng-model="compra.descuento" placeholder="Descuento:">
+                    <input type="text" class="form-control" ng-model="compra.descuento" placeholder="Descuento" maxlength="3s">
                 </div>
             </div>
         </div>
@@ -71,9 +71,9 @@
             </div>
         </div>
         
-        <button type="button" class="btn btn-default" ng-click="post()">Crear</button>
-        <button type="button" class="btn btn-default" ng-click="put()">Editar</button>
-
+        <button type="button" class="btn btn-default" ng-click="post()"><span class="glyphicon glyphicon-floppy-save"></span> Crear</button>
+        <button type="button" class="btn btn-default" ng-click="put()"><span class="glyphicon glyphicon-edit"></span> Editar</button>
+        <button type="button" class="btn btn-default" ng-click="clean()"><span class="glyphicon glyphicon-trash"></span> Limpiar</button>
     </form>
     
     <br>

@@ -80,7 +80,7 @@ public class VehiculoServlet extends HttpServlet {
                 json+="]";
                 //response.getWriter().write(strClientes);           
             }
-            else if(method.equals("POST") || method.equals("PUT") || method.equals("DELETE")){
+            else if(method.equals("POST") || method.equals("PUT")){
                 
                                 
                 Vehiculo vehiculo=new Vehiculo();
@@ -92,19 +92,12 @@ public class VehiculoServlet extends HttpServlet {
                 vehiculo.setPrecioVenta(BigDecimal.valueOf(Double.valueOf(request.getParameter("precioVenta"))));
                 
                 byte[] bytesFoto=null;
-                //if(!method.equals("DELETE")){
-                    Part foto=request.getPart("foto");
-                    //if(foto!=null){
-                        
-                        //foto.write(foto.getSubmittedFileName());                                
-                        bytesFoto = IOUtils.readFully(foto.getInputStream(),-1, true);                
-                        vehiculo.setFoto(bytesFoto);
-                    /*}
-                    else{
-                        vehiculo.setFoto(vehiculoFacade.find(vehiculo.getMatricula()).getFoto());
-                    }*/
-                //}
                 
+                Part foto=request.getPart("foto");
+
+                bytesFoto = IOUtils.readFully(foto.getInputStream(),-1, true);                
+                vehiculo.setFoto(bytesFoto);
+                               
                 if(method.equals("POST")){
                     vehiculoFacade.create(vehiculo);
                     json="{\"estado\":true,\"msj\":\"Vehiculo creado correctamente\"}";
@@ -113,14 +106,12 @@ public class VehiculoServlet extends HttpServlet {
                     vehiculoFacade.edit(vehiculo);
                     json="{\"estado\":true,\"msj\":\"Vehiculo actualizado correctamente\"}";
                 }
-                else if(method.equals("DELETE")){                    
-                    vehiculoFacade.remove(vehiculo);
-                    json="{\"estado\":true,\"msj\":\"Vehiculo eliminado correctamente\"}";
-                }
             }
-            else if(method.equals("ADJUNTAR")){
-                Part foto=request.getPart("foto");                                
-                foto.write(foto.getSubmittedFileName());                
+            else if(method.equals("DELETE")){
+                String id=request.getParameter("matricula");
+                Vehiculo vehiculo=vehiculoFacade.find(id);
+                vehiculoFacade.remove(vehiculo);
+                json="{\"estado\":true,\"msj\":\"Vehiculo eliminado correctamente\"}";
             }
             else{
                 json="{\"estado\":true,\"msj\":\"Opción no valida\"}";

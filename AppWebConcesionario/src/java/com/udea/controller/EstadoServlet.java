@@ -57,7 +57,7 @@ public class EstadoServlet extends HttpServlet {
                 json+="]";
                 //response.getWriter().write(strClientes);           
             }
-            else if(method.equals("POST") || method.equals("PUT") || method.equals("DELETE")){
+            else if(method.equals("POST") || method.equals("PUT")){
                 Estado estado=new Estado();
                 estado.setCodigo(request.getParameter("codigo"));
                 estado.setDescripcion(request.getParameter("descripcion"));
@@ -70,11 +70,13 @@ public class EstadoServlet extends HttpServlet {
                     estadoFacade.edit(estado);
                     json="{\"estado\":true,\"msj\":\"Estado actualizado correctamente\"}";
                 }
-                else if(method.equals("DELETE")){                    
-                    estadoFacade.remove(estado);
-                    json="{\"estado\":true,\"msj\":\"Estado eliminado correctamente\"}";
-                }
             }            
+            else if(method.equals("DELETE")){
+                String codigo=request.getParameter("codigo");
+                Estado estado=estadoFacade.find(codigo);
+                estadoFacade.remove(estado);
+                json="{\"estado\":true,\"msj\":\"Estado eliminado correctamente\"}";
+            }
             else{
                 json="{\"estado\":true,\"msj\":\"Opción no valida\"}";
             }

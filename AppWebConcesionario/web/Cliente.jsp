@@ -13,13 +13,13 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Id</label>
-                    <input type="text" class="form-control" ng-model="cliente.id" placeholder="Nombre">
+                    <input type="text" class="form-control" ng-model="cliente.id" placeholder="Nombre" maxlength="20">
                 </div>
             </div>      
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Nombre:</label>
-                    <input type="text" class="form-control" ng-model="cliente.nombre" placeholder="Nombre">
+                    <input type="text" class="form-control" ng-model="cliente.nombre" placeholder="Nombre" maxlength="50">
                 </div>
             </div>
         </div>
@@ -27,13 +27,13 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Apellidos:</label>
-                    <input type="text" class="form-control" ng-model="cliente.apellidos" placeholder="Apellidos">
+                    <input type="text" class="form-control" ng-model="cliente.apellidos" placeholder="Apellidos" maxlength="50">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Direccion:</label>
-                    <input type="text" class="form-control" ng-model="cliente.direccion" placeholder="Direccion">
+                    <input type="text" class="form-control" ng-model="cliente.direccion" placeholder="Direccion" maxlength="100">
                 </div>
             </div>
         </div>
@@ -41,25 +41,26 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label>Teléfono</label>
-                    <input type="tel" class="form-control" ng-model="cliente.telefono" placeholder="Teléfono">
+                    <input type="tel" class="form-control" ng-model="cliente.telefono" placeholder="Teléfono" maxlength="15">
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label>Celular</label>
-                    <input type="tel" class="form-control" ng-model="cliente.celular" placeholder="Celular">
+                    <input type="tel" class="form-control" ng-model="cliente.celular" placeholder="Celular" maxlength="15">
                 </div>
             </div>
             <div class="col-md-6">            
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="email" class="form-control" ng-model="cliente.email" placeholder="Email">
+                    <input type="text" class="form-control" ng-model="cliente.email" placeholder="Email" maxlength="50">
                 </div>
             </div>
         </div>
         
-        <button type="button" class="btn btn-default" ng-click="postClientes()">Crear</button>
-        <button type="button" class="btn btn-default" ng-click="putClientes()">Editar</button>
+        <button type="button" class="btn btn-default" ng-click="postClientes()"><span class="glyphicon glyphicon-floppy-save"></span> Crear</button>
+        <button type="button" class="btn btn-default" ng-click="putClientes()"><span class="glyphicon glyphicon-edit"></span> Editar</button>
+        <button type="button" class="btn btn-default" ng-click="clean()"><span class="glyphicon glyphicon-trash"></span> Limpiar</button>
 
     </form>
     <br>

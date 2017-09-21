@@ -12,19 +12,20 @@
         <h3>Crear/Editar Vendedor</h3>        
         <div class="form-group">
             <label>Id</label>
-            <input type="text" class="form-control" ng-model="vendedor.id" placeholder="Nombre">
+            <input type="text" class="form-control" ng-model="vendedor.id" placeholder="Id" maxlength="20">
         </div>          
         <div class="form-group">
             <label>Nombre:</label>
-            <input type="text" class="form-control" ng-model="vendedor.nombre" placeholder="Nombre">
+            <input type="text" class="form-control" ng-model="vendedor.nombre" placeholder="Nombre" maxlength="50">
         </div>
         <div class="form-group">
             <label>Apellidos:</label>
-            <input type="text" class="form-control" ng-model="vendedor.apellidos" placeholder="Apellidos">
+            <input type="text" class="form-control" ng-model="vendedor.apellidos" placeholder="Apellidos" maxlength="50">
         </div>
         
-        <button type="button" class="btn btn-default" ng-click="post()">Crear</button>
-        <button type="button" class="btn btn-default" ng-click="put()">Editar</button>
+        <button type="button" class="btn btn-default" ng-click="post()"><span class="glyphicon glyphicon-floppy-save"></span> Crear</button>
+        <button type="button" class="btn btn-default" ng-click="put()"><span class="glyphicon glyphicon-edit"></span> Editar</button>
+        <button type="button" class="btn btn-default" ng-click="clean()"><span class="glyphicon glyphicon-trash"></span> Limpiar</button>
         
     </form>
     <h3>Lista de Vendedores</h3>

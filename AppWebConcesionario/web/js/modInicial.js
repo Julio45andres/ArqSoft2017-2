@@ -155,7 +155,10 @@ controller('ctrCliente',function($scope,$srv){
         $srv.clientes($scope.cliente).then(
         function(res){
             $scope.response=res.data;
-            $scope.getClientes();
+            if($scope.response.estado){
+                $scope.clean();
+                $scope.getClientes();
+            }
         },function(err){
             console.log(err);
         })
@@ -165,7 +168,10 @@ controller('ctrCliente',function($scope,$srv){
         $srv.clientes($scope.cliente).then(
         function(res){
             $scope.response=res.data;
-            $scope.getClientes();
+            if($scope.response.estado){
+                $scope.clean();
+                $scope.getClientes();
+            }
         },function(err){
             console.log(err);
         })
@@ -174,13 +180,20 @@ controller('ctrCliente',function($scope,$srv){
     $scope.edit=function(item){
         $scope.cliente=item;
     }
-    
+    $scope.clean=function(){
+        $scope.cliente=undefined;
+    }
     $scope.remove=function(item){
+        if(!confirm("Esta seguro de eliminar el cliente con cedula "+item.id+" ?")){
+            return;
+        }
         item.method='DELETE';
         $srv.clientes(item).then(
         function(res){
             $scope.response=res.data;
-            $scope.getClientes();
+            if($scope.response.estado){
+                $scope.getClientes();
+            }
         },function(err){
             console.log(err);
         })
@@ -210,7 +223,10 @@ controller('ctrVendedor',function($scope,$srv){
         $srv.vendedores($scope.vendedor).then(
         function(res){
             $scope.response=res.data;
-            $scope.get();
+            if($scope.response.estado){
+                $scope.clean();
+                $scope.get();
+            }
         },function(err){
             console.log(err);
         })
@@ -220,7 +236,10 @@ controller('ctrVendedor',function($scope,$srv){
         $srv.vendedores($scope.vendedor).then(
         function(res){
             $scope.response=res.data;
-            $scope.get();
+            if($scope.response.estado){
+                $scope.clean();
+                $scope.get();
+            }
         },function(err){
             console.log(err);
         })
@@ -229,8 +248,13 @@ controller('ctrVendedor',function($scope,$srv){
     $scope.edit=function(item){
         $scope.vendedor=item;
     }
-    
+    $scope.clean=function(){
+        $scope.vendedor=undefined;
+    }
     $scope.remove=function(item){
+        if(!confirm("Esta seguro de eliminar el vendedor "+item.id+" ?")){
+            return;
+        }
         item.method='DELETE';
         $srv.vendedores(item).then(
         function(res){
@@ -265,7 +289,10 @@ controller('ctrEstado',function($scope,$srv){
         $srv.estados($scope.estado).then(
         function(res){
             $scope.response=res.data;
-            $scope.get();
+            if($scope.response.estado){
+                $scope.clean();
+                $scope.get();
+            }
         },function(err){
             console.log(err);
         })
@@ -276,7 +303,10 @@ controller('ctrEstado',function($scope,$srv){
         $srv.estados($scope.estado).then(
         function(res){
             $scope.response=res.data;
-            $scope.get();
+            if($scope.response.estado){
+                $scope.clean();
+                $scope.get();
+            }
         },function(err){
             console.log(err);
         })
@@ -286,7 +316,14 @@ controller('ctrEstado',function($scope,$srv){
         $scope.estado=item;
     }
     
+    $scope.clean=function(){
+        $scope.estado=undefined;
+    }
+    
     $scope.remove=function(item){
+        if(!confirm("Esta seguro de eliminar el estado "+item.codigo+" ?")){
+            return;
+        }
         item.method='DELETE';
         $srv.estados(item).then(
         function(res){
@@ -321,7 +358,10 @@ controller('ctrMarca',function($scope,$srv){
         $srv.marcas($scope.marca).then(
         function(res){
             $scope.response=res.data;
-            $scope.get();
+            if($scope.response.estado){
+                $scope.clean();
+                $scope.get();
+            }
         },function(err){
             console.log(err);
         })
@@ -332,7 +372,10 @@ controller('ctrMarca',function($scope,$srv){
         $srv.marcas($scope.marca).then(
         function(res){
             $scope.response=res.data;
-            $scope.get();
+            if($scope.response.estado){
+                $scope.clean();
+                $scope.get();
+            }
         },function(err){
             console.log(err);
         })
@@ -341,8 +384,14 @@ controller('ctrMarca',function($scope,$srv){
     $scope.edit=function(item){
         $scope.marca=item;
     }
+    $scope.clean=function(){
+        $scope.marca=undefined;
+    }
     
     $scope.remove=function(item){
+        if(!confirm("Esta seguro de eliminar la Marca "+item.codigo+" ?")){
+            return;
+        }
         item.method='DELETE';
         $srv.marcas(item).then(
         function(res){
@@ -377,7 +426,10 @@ controller('ctrTipoPago',function($scope,$srv){
         $srv.tipoPagos($scope.tipoPago).then(
         function(res){
             $scope.response=res.data;
-            $scope.get();
+            if($scope.response.estado){
+                $scope.clean();
+                $scope.get();
+            }
         },function(err){
             console.log(err);
         })
@@ -388,7 +440,10 @@ controller('ctrTipoPago',function($scope,$srv){
         $srv.tipoPagos($scope.tipoPago).then(
         function(res){
             $scope.response=res.data;
-            $scope.get();
+            if($scope.response.estado){
+                $scope.clean();
+                $scope.get();
+            }
         },function(err){
             console.log(err);
         })
@@ -397,8 +452,13 @@ controller('ctrTipoPago',function($scope,$srv){
     $scope.edit=function(item){
         $scope.tipoPago=item;
     }
-    
+    $scope.clean=function(){
+        $scope.tipoPago=undefined;
+    }
     $scope.remove=function(item){
+        if(!confirm("Esta seguro de eliminar el Tipo de Pago "+item.codigo+" ?")){
+            return;
+        }
         item.method='DELETE';
         $srv.tipoPagos(item).then(
         function(res){
@@ -415,6 +475,10 @@ controller('ctrVehiculo',function($scope,$srv,$http){
     $scope.vehiculo={};    
     
     $scope.listVehiculos=[];
+    
+    $scope.listMarcas=[];
+    
+    $scope.listEstados=[];
     
     $scope.response=undefined;
     
@@ -443,35 +507,16 @@ controller('ctrVehiculo',function($scope,$srv,$http){
         }).then(
         function(res){
             $scope.response=res.data;
-            $scope.get();
+            if($scope.response.estado){
+                $scope.clean();
+                $scope.get();
+            }
         },function(err){
             console.log(err);
         })
     }
-    
-    $scope.adjuntar=function(){
-        var formData=new FormData();
-        formData.append("foto",$scope.foto);
         
-        $http({
-            method:'POST',
-            url:'VehiculoServlet',
-            data:formData,
-            params:{method:"ADJUNTAR"},
-            headers:{"Content-type":undefined},
-            transformRequest:angular.indentity
-        })
-    }
-    
     $scope.put=function(){
-        /*$scope.vehiculo.method='PUT';
-        $srv.vehiculos($scope.vehiculo).then(
-        function(res){
-            $scope.response=res.data;
-            $scope.get();
-        },function(err){
-            console.log(err);
-        })*/
         $scope.vehiculo.method='PUT';
         var formData=new FormData();
         formData.append("foto",$scope.foto);
@@ -485,8 +530,11 @@ controller('ctrVehiculo',function($scope,$srv,$http){
             transformRequest:angular.indentity
         }).then(
         function(res){
-            $scope.response=res.data;
-            $scope.get();
+            $scope.response=res.data;            
+            if($scope.response.estado){
+                $scope.clean();
+                $scope.get();
+            }
         },function(err){
             console.log(err);
         })
@@ -494,18 +542,50 @@ controller('ctrVehiculo',function($scope,$srv,$http){
     
     $scope.edit=function(item){
         $scope.vehiculo=item;
+        $scope.matriculaAux=$scope.vehiculo.matricula;
     }
     
-    $scope.remove=function(item){
-        item.method='DELETE';
-        $srv.vehiculos(item).then(
+    $scope.clean=function(){
+       $scope.vehiculo={};
+       $scope.foto=undefined;
+       $scope.matriculaAux="";
+    }
+    
+    $scope.remove=function(item){  
+        if(!confirm("Esta seguro de eliminar el vehículo con matricula "+item.matricula+" ?")){
+            return;
+        }
+        $http({
+            method:'POST',
+            url:'VehiculoServlet',
+            params:{method:'DELETE',matricula:item.matricula},
+            headers:{"Content-type":undefined},
+            transformRequest:angular.indentity
+        }).then(
         function(res){
             $scope.response=res.data;
-            $scope.get();
+            if($scope.response.estado){
+                $scope.get();
+            }
+        },function(err){
+            console.log(err);
+        })        
+    }
+        
+    $srv.marcas({method:'GET'}).then(
+        function(res){
+            $scope.listMarcas=res.data;
+        },function(err){
+            console.log(err);
+        });        
+   
+    $srv.estados({method:'GET'}).then(
+        function(res){
+            $scope.listEstados=res.data;
         },function(err){
             console.log(err);
         })
-    }
+    
     
     $scope.get();
 }).
@@ -539,7 +619,10 @@ controller('ctrCompra',function($scope,$srv){
         $srv.compras($scope.compra).then(
         function(res){
             $scope.response=res.data;
-            $scope.get();
+            if($scope.response.estado){
+                $scope.clean();
+                $scope.get();                
+            }
         },function(err){
             console.log(err);
         })
@@ -550,7 +633,10 @@ controller('ctrCompra',function($scope,$srv){
         $srv.compras($scope.compra).then(
         function(res){
             $scope.response=res.data;
-            $scope.get();
+            if($scope.response.estado){
+                $scope.clean();
+                $scope.get();                
+            }
         },function(err){
             console.log(err);
         })
@@ -559,8 +645,14 @@ controller('ctrCompra',function($scope,$srv){
     $scope.edit=function(item){
         $scope.compra=item;
     }
+    $scope.clean=function(){
+        $scope.compra=undefined;
+    }
     
     $scope.remove=function(item){
+        if(!confirm("Esta seguro de eliminar la compra "+item.codigo+" ?")){
+            return;
+        }
         item.compra='DELETE';
         $srv.compras(item).then(
         function(res){

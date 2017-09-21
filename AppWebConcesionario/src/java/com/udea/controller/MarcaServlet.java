@@ -56,7 +56,7 @@ public class MarcaServlet extends HttpServlet {
                 json+="]";
                 //response.getWriter().write(strClientes);           
             }
-            else if(method.equals("POST") || method.equals("PUT") || method.equals("DELETE")){
+            else if(method.equals("POST") || method.equals("PUT")){
                 Marca marca=new Marca();
                 marca.setCodigo(request.getParameter("codigo"));
                 marca.setNombreMarca(request.getParameter("nombreMarca"));
@@ -68,10 +68,12 @@ public class MarcaServlet extends HttpServlet {
                     marcaFacade.edit(marca);
                     json="{\"estado\":true,\"msj\":\"Marca actualizado correctamente\"}";
                 }
-                else if(method.equals("DELETE")){
-                    marcaFacade.remove(marca);
-                    json="{\"estado\":true,\"msj\":\"Marca eliminada correctamente\"}";
-                }                
+            }
+            else if(method.equals("DELETE")){
+                String codigo=request.getParameter("codigo");
+                Marca marca=marcaFacade.find(codigo);
+                marcaFacade.remove(marca);
+                json="{\"estado\":true,\"msj\":\"Marca eliminada correctamente\"}";
             }
             else{
                 json="{\"estado\":true,\"msj\":\"Opción no valida\"}";

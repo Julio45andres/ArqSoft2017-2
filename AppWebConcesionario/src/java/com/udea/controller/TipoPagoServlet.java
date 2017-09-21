@@ -54,10 +54,9 @@ public class TipoPagoServlet extends HttpServlet {
                     json+="},";
                 }
                 json=json.substring(0, json.length()-1);
-                json+="]";
-                //response.getWriter().write(strClientes);           
+                json+="]";                
             }
-            else if(method.equals("POST") || method.equals("PUT") || method.equals("DELETE")){
+            else if(method.equals("POST") || method.equals("PUT")){
                 Tipopago tipopago=new Tipopago();
                 tipopago.setCodigo(request.getParameter("codigo"));
                 tipopago.setDescripcion(request.getParameter("descripcion"));
@@ -69,12 +68,14 @@ public class TipoPagoServlet extends HttpServlet {
                 else if(method.equals("PUT")){
                     tipopagoFacade.edit(tipopago);
                     json="{\"estado\":true,\"msj\":\"Tipo de Pago actualizado correctamente\"}";
-                }
-                else if(method.equals("DELETE")){                   
-                    tipopagoFacade.remove(tipopago);
-                    json="{\"estado\":true,\"msj\":\"Tipo de Pago eliminado correctamente\"}";
                 }                
-            }            
+            }          
+            else if(method.equals("DELETE")){
+                String codigo=request.getParameter("codigo");
+                Tipopago tipopago=tipopagoFacade.find(codigo);
+                tipopagoFacade.remove(tipopago);
+                json="{\"estado\":true,\"msj\":\"Tipo de Pago eliminado correctamente\"}";
+            }
             else{
                 json="{\"estado\":true,\"msj\":\"Opción no valida\"}";
             }

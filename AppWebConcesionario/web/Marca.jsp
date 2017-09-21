@@ -12,15 +12,16 @@
         <h3>Crear/Editar Marca</h3>        
         <div class="form-group">
             <label>Codigo:</label>
-            <input type="text" class="form-control" ng-model="marca.codigo" placeholder="Codigo">
+            <input type="text" class="form-control" ng-model="marca.codigo" placeholder="Codigo" maxlength="5">
         </div>          
         <div class="form-group">
             <label>Nombre Marca:</label>
-            <input type="text" class="form-control" ng-model="marca.nombreMarca" placeholder="Nombre Marca">
+            <input type="text" class="form-control" ng-model="marca.nombreMarca" placeholder="Nombre Marca" maxlength="30">
         </div>        
         
-        <button type="button" class="btn btn-default" ng-click="post()">Crear</button>
-        <button type="button" class="btn btn-default" ng-click="put()">Editar</button>
+        <button type="button" class="btn btn-default" ng-click="post()"><span class="glyphicon glyphicon-floppy-save"></span> Crear</button>
+        <button type="button" class="btn btn-default" ng-click="put()"><span class="glyphicon glyphicon-edit"></span> Editar</button>
+        <button type="button" class="btn btn-default" ng-click="clean()"><span class="glyphicon glyphicon-trash"></span> Limpiar</button>
         
     </form>
     <h3>Lista de Marcas</h3>

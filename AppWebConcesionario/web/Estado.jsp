@@ -12,19 +12,20 @@
         <h3>Crear/Editar Estado</h3>        
         <div class="form-group">
             <label>Codigo:</label>
-            <input type="text" class="form-control" ng-model="estado.codigo" placeholder="Codigo">
+            <input type="text" class="form-control" ng-model="estado.codigo" placeholder="Codigo" maxlength="5">
         </div>          
         <div class="form-group">
             <label>Descripción:</label>
-            <input type="text" class="form-control" ng-model="estado.descripcion" placeholder="Descripción">
+            <input type="text" class="form-control" ng-model="estado.descripcion" placeholder="Descripción" maxlength="250">
         </div>
         <div class="form-group">
             <label>Estado:</label>
-            <input type="text" class="form-control" ng-model="estado.estado" placeholder="Estado">
+            <input type="text" class="form-control" ng-model="estado.estado" placeholder="Estado" maxlength="30">
         </div>
         
-        <button type="button" class="btn btn-default" ng-click="post()">Crear</button>
-        <button type="button" class="btn btn-default" ng-click="put()">Editar</button>
+        <button type="button" class="btn btn-default" ng-click="post()"><span class="glyphicon glyphicon-floppy-save"></span> Crear</button>
+        <button type="button" class="btn btn-default" ng-click="put()"><span class="glyphicon glyphicon-edit"></span> Editar</button>
+        <button type="button" class="btn btn-default" ng-click="clean()"><span class="glyphicon glyphicon-trash"></span> Limpiar</button>
         
     </form>
     <h3>Lista de Estados</h3>
