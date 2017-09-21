@@ -83,6 +83,7 @@ public class CompraServlet extends HttpServlet {
             else if(method.equals("DELETE")){
                 String codigo=request.getParameter("codigo");
                 Compra compra=compraFacade.find(codigo);
+                System.out.println(compra);
                 compraFacade.remove(compra);
                 json="{\"estado\":true,\"msj\":\"Compra eliminada correctamente\"}";
             }

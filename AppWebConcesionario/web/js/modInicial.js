@@ -656,7 +656,7 @@ controller('ctrCompra',function($scope,$srv){
         if(!confirm("Esta seguro de eliminar la compra "+item.codigo+" ?")){
             return;
         }
-        item.compra='DELETE';
+        item.method='DELETE';
         $srv.compras(item).then(
         function(res){
             $scope.response=res.data;
