@@ -34,6 +34,9 @@ angular.module('modInicial',['ngRoute']).config(
             templateUrl:'Compra.jsp',
             controller:'ctrCompra'
         }).
+        when('/acercaDe',{
+            templateUrl:'AcercaDe.jsp'
+        }).
         otherwise({
             templateUrl:'Cliente.jsp',
             controller:'ctrCliente'
