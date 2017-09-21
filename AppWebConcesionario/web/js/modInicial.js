@@ -704,10 +704,15 @@ $(function(){
     for(var i in liMenu){
         if(liMenu[i].nodeName=='LI'){
             liMenu[i].onclick=function(){
-                controlMenu(this)
+                controlMenu(this);
             }
         }
     }
+    var menuAcercaDe=document.getElementById("menuAcercaDe");
+    menuAcercaDe.onclick=function(){
+        controlMenu(this);
+    }
+    
 });
 
 function controlMenu(id){
@@ -721,6 +726,10 @@ function controlMenu(id){
                 break;
             }
         }
+    }
+    var menuAcercaDe=document.getElementById("menuAcercaDe");
+    if(menuAcercaDe.className=='active'){
+        menuAcercaDe.className='';
     }
     id.className="active";
 }

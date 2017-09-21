@@ -31,7 +31,7 @@
         
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#!acercaDe">AcercaDe</a></li>
+        <li id="menuAcercaDe"><a href="#!acercaDe">AcercaDe</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
