@@ -19,3 +19,6 @@ nbproject/*
 *.swp
 *.DS_Store
 *.lock
+/Laboratorio2/AppPasarelaPago/AppPasarelaPago-ejb/target/
+/Laboratorio2/AppPasarelaPago/AppPasarelaPago-web/target/
+/Laboratorio2/AppPasarelaPago/AppPasarelaPago-ear/target/
