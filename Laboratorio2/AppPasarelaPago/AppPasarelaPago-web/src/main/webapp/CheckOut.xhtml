@@ -1,12 +1,39 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        Hello from Facelets
+        <br />
+        <h:link outcome="#{carritoMBean.volverAInicio()}" value="Volver al inicio" />
+        <br />
+        <h:link outcome="#{carritoMBean.volverATienda()}" value="Pasar a la tienda" />
+        <br />
+        <h:link outcome="#{carritoMBean.pagarArticulos()}" value="Pagar" />
+        <br />
+        <h:form>
+            <h:commandLink value="Vaciar carrito" actionListener="#{transaccionMBean.vaciarCanasta()}" />
+        </h:form>
+        
+        <f:view>
+            <h:form>
+                <h1><h:outputText value="Items en la canasta"/></h1>
+                <h:dataTable value="#{transaccionMBean.canasta}" var="item">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Codigo"/>
+                        </f:facet>
+                        <h:outputText value="#{item.toString()}"/>
+                    </h:column>
+                </h:dataTable>
+            </h:form>
+        </f:view>
+        
+        <h:outputText value="Items:#{transaccionMBean.numItemsEnCanasta}" />
+        
     </h:body>
 </html>
 
