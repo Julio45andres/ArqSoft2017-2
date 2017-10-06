@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Tienda Arq. Software - Lab 2</title>
     </h:head>
@@ -13,7 +14,63 @@
         <br />
         <h:link outcome="#{carritoMBean.irACaja()}" value="Pasar a la caja" />
         <br />
-        
+        <f:view>
+
+
+            <h:form>
+                <h1><h:outputText value="List"/></h1>
+                <p:dataTable value="#{carritoMBean.productos}" 
+                             var="item"
+                             rows="5"
+                             paginator="true">
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Codigo"/>
+                        </f:facet>
+                        <h:outputText value="#{item.codigo}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Nombre"/>
+                        </f:facet>
+                        <h:outputText value="#{item.nombre}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Descripcion"/>
+                        </f:facet>
+                        <h:outputText value="#{item.descripcion}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Existencia"/>
+                        </f:facet>
+                        <h:outputText value="#{item.existencia}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="PrecioProveedor"/>
+                        </f:facet>
+                        <h:outputText value="#{item.precioProveedor}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="PrecioCliente"/>
+                        </f:facet>
+                        <h:outputText value="#{item.precioCliente}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Acción"/>
+                        </f:facet>
+                        
+                        <p:commandButton value="Agregar" actionListener="#{transaccionMBean.agregarArticuloACanasta(item.codigo)}"  rendered="#{!(transaccionMBean.estaArticulo(item.codigo))}"/>
+                        <p:commandButton value="Quitar" actionListener="#{transaccionMBean.quitarArticuloDeCanasta(item.codigo)}" rendered="#{transaccionMBean.estaArticulo(item.codigo)}"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </f:view>
+
         <f:view>
             <h:form>
                 <h1><h:outputText value="Articulos Disponibles"/></h1>

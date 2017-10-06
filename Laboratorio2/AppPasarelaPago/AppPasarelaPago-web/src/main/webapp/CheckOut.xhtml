@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -18,6 +19,43 @@
             <h:commandLink value="Vaciar carrito" actionListener="#{transaccionMBean.vaciarCanasta()}" />
         </h:form>
         
+        <f:view>
+            <h:form prependId="false">
+                <p:panelGrid columns="2">
+                    <f:facet name="header">
+                        Registro de la transacción
+                    </f:facet>
+                    <p:outputLabel value="identificacion" for="nombreCliente" />
+                    <p:inputText id="identificacion" value="#{transaccionMBean.duiCliente}" title="Identificacion" required="true" requiredMessage="The Identificacion field is required."/>                
+                    <p:outputLabel value="NombreCliente:" for="nombreCliente" />
+                    <p:inputText id="nombreCliente" value="#{transaccionMBean.nombreCliente}" title="NombreCliente" required="true" requiredMessage="The NombreCliente field is required."/>                
+                    <p:outputLabel value="Email:" for="email" />
+                    <p:inputText id="email" value="#{transaccionMBean.email}" title="Email" required="true" requiredMessage="The Email field is required."/>
+                    <p:outputLabel value="NumTCredito:" for="numTCredito" />
+                    <p:inputText id="numTCredito" value="#{transaccionMBean.numTCredito}" title="NumTCredito" required="true" requiredMessage="The NumTCredito field is required."/>
+                    <p:outputLabel value="CvvTCredito:" for="cvvTCredito" />
+                    <p:inputText id="cvvTCredito" value="#{transaccionMBean.cvvTCredito}" title="CvvTCredito" required="true" requiredMessage="The CvvTCredito field is required."/>
+                    <p:outputLabel value="TipoTCredito:" for="tipoTCredito" />
+                    <p:inputText id="tipoTCredito" value="#{transaccionMBean.tipoTCredito}" title="TipoTCredito" required="true" requiredMessage="The TipoTCredito field is required."/>
+                    <p:outputLabel value="FVenceTCredito:" for="FVenceTCredito" />
+                    <p:inputText id="FVenceTCredito" value="#{transaccionMBean.fVenceTCredito}" title="FVenceTCredito" required="true" requiredMessage="The FVenceTCredito field is required."/>
+                    <p:outputLabel value="ValorTotal:" for="valorTotal" />
+                    <p:inputText id="valorTotal" value="#{transaccionMBean.valorTotal}" title="ValorTotal" required="true" requiredMessage="The ValorTotal field is required."/>                    
+                </p:panelGrid>
+                <p:captcha id="captcha"></p:captcha>
+                
+                <p:commandButton actionListener="#{transaccionMBean.validar()}" action="submit" value="Validar" update="idSubmit"></p:commandButton>
+                <p:commandButton value="Pagar" action="submit" disabled="#{transaccionMBean.disabled}" id="idSubmit" ></p:commandButton>
+                <h:link outcome="#{transaccionMBean.pagar()}" value="Pagar" />                
+            </h:form>
+        </f:view>
+
+        <f:view>
+
+        </f:view>
+
+
+       
         <f:view>
             <h:form>
                 <h1><h:outputText value="Items en la canasta"/></h1>
