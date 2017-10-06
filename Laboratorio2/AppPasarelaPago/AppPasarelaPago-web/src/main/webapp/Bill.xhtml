@@ -5,17 +5,29 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Comprobante de la Transacción</title>
     </h:head>
     <h:body>
-        <br />
         <h:link outcome="#{carritoMBean.volverAInicio()}" value="Volver al inicio" />
-        <br />
-        <p:outputLabel value="#{transaccionMBean.nombreCliente}" />
-        <h:outputText value="#{transaccionMBean.nombreCliente}" />
-        <p:column headerText="Qr Code">
-            <p:barcode value="1045 Cesar" type="qr"/>
-        </p:column>
+        <h:form>
+            <h1>
+                <h:outputText value="Recibo de transaccion" />
+            </h1>
+            <p:panelGrid columns="2">
+                <f:facet name="Header">
+                    Comprobante de pago
+                </f:facet>
+                <h:outputText value="#{transaccionMBean.duiCliente}" />
+                <h:outputText value="#{transaccionMBean.nombreCliente}" />
+                <h:outputText value="#{transaccionMBean.email}" />
+                <h:outputText value="#{transaccionMBean.numTCredito}" />
+                <h:outputText value="#{transaccionMBean.tipoTCredito}" />
+                <h:outputText value="#{transaccionMBean.valorTotal}" />
+                <p:column headerText="Qr Code">
+                    <p:barcode value="#{transaccionMBean.duiCliente} #{transaccionMBean.valorTotal} #{transaccionMBean.fVenceTCredito}" type="qr"/>
+                </p:column>
+            </p:panelGrid>
+        </h:form>
     </h:body>
 </html>
 

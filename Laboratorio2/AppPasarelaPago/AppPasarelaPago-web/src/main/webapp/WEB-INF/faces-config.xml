@@ -64,5 +64,9 @@
 		<var>msg</var>
 	</resource-bundle>
     </application>
-    
+    <managed-bean>
+        <managed-bean-name>captcha</managed-bean-name>
+        <managed-bean-class>com.udea.controller.Captcha</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
 </faces-config>

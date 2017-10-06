@@ -21,32 +21,40 @@
         
         <f:view>
             <h:form prependId="false">
+                <h:commandButton action="${transaccionMBean.changeLanguage('')}" value="English"></h:commandButton>
+                <h:commandButton action="${transaccionMBean.changeLanguage('es')}" value="Español"></h:commandButton>
+                
                 <p:panelGrid columns="2">
                     <f:facet name="header">
                         Registro de la transacción
                     </f:facet>
-                    <p:outputLabel value="identificacion" for="nombreCliente" />
-                    <p:inputText id="identificacion" value="#{transaccionMBean.duiCliente}" title="Identificacion" required="true" requiredMessage="The Identificacion field is required."/>                
-                    <p:outputLabel value="NombreCliente:" for="nombreCliente" />
-                    <p:inputText id="nombreCliente" value="#{transaccionMBean.nombreCliente}" title="NombreCliente" required="true" requiredMessage="The NombreCliente field is required."/>                
-                    <p:outputLabel value="Email:" for="email" />
-                    <p:inputText id="email" value="#{transaccionMBean.email}" title="Email" required="true" requiredMessage="The Email field is required."/>
-                    <p:outputLabel value="NumTCredito:" for="numTCredito" />
-                    <p:inputText id="numTCredito" value="#{transaccionMBean.numTCredito}" title="NumTCredito" required="true" requiredMessage="The NumTCredito field is required."/>
-                    <p:outputLabel value="CvvTCredito:" for="cvvTCredito" />
-                    <p:inputText id="cvvTCredito" value="#{transaccionMBean.cvvTCredito}" title="CvvTCredito" required="true" requiredMessage="The CvvTCredito field is required."/>
-                    <p:outputLabel value="TipoTCredito:" for="tipoTCredito" />
-                    <p:inputText id="tipoTCredito" value="#{transaccionMBean.tipoTCredito}" title="TipoTCredito" required="true" requiredMessage="The TipoTCredito field is required."/>
-                    <p:outputLabel value="FVenceTCredito:" for="FVenceTCredito" />
-                    <p:inputText id="FVenceTCredito" value="#{transaccionMBean.fVenceTCredito}" title="FVenceTCredito" required="true" requiredMessage="The FVenceTCredito field is required."/>
-                    <p:outputLabel value="ValorTotal:" for="valorTotal" />
-                    <p:inputText id="valorTotal" value="#{transaccionMBean.valorTotal}" title="ValorTotal" required="true" requiredMessage="The ValorTotal field is required."/>                    
+                    <h:outputLabel value="Identificacion" for="identificacion" />
+                    <h:inputText id="identificacion" value="#{transaccionMBean.duiCliente}" title="Identificacion" required="true" requiredMessage="The Identificacion field is required."/>                
+                    <h:outputLabel value="NombreCliente:" for="nombreCliente" />
+                    <h:inputText id="nombreCliente" value="#{transaccionMBean.nombreCliente}" title="NombreCliente" required="true" requiredMessage="The NombreCliente field is required."/>                
+                    <h:outputLabel value="Email:" for="email" />
+                    <h:inputText id="email" value="#{transaccionMBean.email}" title="Email" required="true" requiredMessage="The Email field is required."/>
+                    <h:outputLabel value="NumTCredito:" for="numTCredito" />
+                    <h:inputText id="numTCredito" value="#{transaccionMBean.numTCredito}" title="NumTCredito" required="true" requiredMessage="The NumTCredito field is required."/>
+                    <h:outputLabel value="CvvTCredito:" for="cvvTCredito" />
+                    <h:inputText id="cvvTCredito" value="#{transaccionMBean.cvvTCredito}" title="CvvTCredito" required="true" requiredMessage="The CvvTCredito field is required.">
+                        <f:validateLength minimum="3" />
+                    </h:inputText>
+                    <h:outputLabel value="TipoTCredito:" for="tipoTCredito" />
+                    <h:inputText id="tipoTCredito" value="#{transaccionMBean.tipoTCredito}" title="TipoTCredito" required="true" requiredMessage="The TipoTCredito field is required."/>
+                    <h:outputLabel value="FVenceTCredito:" for="FVenceTCredito" />
+                    <h:inputText id="FVenceTCredito" value="#{transaccionMBean.fVenceTCredito}" title="FVenceTCredito" required="true" requiredMessage="The FVenceTCredito field is required."/>
+                    <h:outputLabel value="ValorTotal:" for="valorTotal" />
+                    <h:inputText id="valorTotal" value="#{transaccionMBean.valorTotal}" title="ValorTotal" required="true" requiredMessage="The ValorTotal field is required."/>                    
                 </p:panelGrid>
-                <p:captcha id="captcha"></p:captcha>
+                <!--<p:message id="msg" />-->
+                <!--<p:captcha id="captcha"></p:captcha>-->
                 
-                <p:commandButton actionListener="#{transaccionMBean.validar()}" action="submit" value="Validar" update="idSubmit"></p:commandButton>
-                <p:commandButton value="Pagar" action="submit" disabled="#{transaccionMBean.disabled}" id="idSubmit" ></p:commandButton>
-                <h:link outcome="#{transaccionMBean.pagar()}" value="Pagar" />                
+                <p:commandButton id="mybutton" binding="#{transaccionMBean.mybutton}" actionListener="#{transaccionMBean.validar()}" ajax="false" value="Validar"/> 
+                <h:commandButton id="x" value="Realizar Pago" actionListener="#{transaccionMBean.pagar()}" disabled="#{transaccionMBean.disabled}" action="submit" />
+                <h:link outcome="PAGAR" value="Recibo" />
+                
+                <h:message for="mybutton" />
             </h:form>
         </f:view>
 
