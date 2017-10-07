@@ -21,7 +21,7 @@
                 <h1><h:outputText value="Articulos Disponibles"/></h1>
                 <p:dataTable value="#{carritoMBean.productos}" 
                              var="item"
-                             rows="5"
+                             rows="10"
                              paginator="true">
                    
                     <p:column>
@@ -48,8 +48,8 @@
                             <h:outputText value="Acción"/>
                         </f:facet>
                         
-                        <h:commandButton value="Agregar" actionListener="#{transaccionMBean.agregarArticuloACanasta(item.codigo)}"  rendered="#{!(transaccionMBean.estaArticulo(item.codigo))}"/>
-                        <h:commandButton value="Quitar" actionListener="#{transaccionMBean.quitarArticuloDeCanasta(item.codigo)}" rendered="#{transaccionMBean.estaArticulo(item.codigo)}"/>
+                        <h:commandButton value="Agregar" actionListener="#{transaccionMBean.agregarArticuloACanasta(item)}"  rendered="#{!(transaccionMBean.estaArticulo(item))}"/>
+                        <h:commandButton value="Quitar" actionListener="#{transaccionMBean.quitarArticuloDeCanasta(item)}" rendered="#{transaccionMBean.estaArticulo(item)}"/>
                     </p:column>
                 </p:dataTable>
             </h:form>

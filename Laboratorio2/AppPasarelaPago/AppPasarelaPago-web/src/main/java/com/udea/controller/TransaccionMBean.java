@@ -2,6 +2,7 @@ package com.udea.controller;
 
 import com.udea.dao.ComprobanteFacadeLocal;
 import com.udea.dao.TransaccionFacadeLocal;
+import com.udea.modelo.Articulo;
 import com.udea.modelo.Transaccion;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -23,7 +24,8 @@ public class TransaccionMBean implements Serializable
     @EJB
     private TransaccionFacadeLocal transaccionFacade;
     
-    private List<String> canasta = new ArrayList<>();
+    private List<Articulo> canasta = new ArrayList<Articulo>();
+    
     private int numItemsEnCanasta;
     //private Transaccion transaccion;
     
@@ -47,18 +49,18 @@ public class TransaccionMBean implements Serializable
     
     public TransaccionMBean()
     {
-        numItemsEnCanasta = 0;
-        duiCliente="1045021276";
+        numItemsEnCanasta = 0;        
+        this.duiCliente="1045";
         nombreCliente="CESAR";
         email="cesar@udea.com";
         numTCredito="1111111111";
-        cvvTCredito="111111";
-        tipoTCredito="VISA";
+        this.cvvTCredito="111";        
+        tipoTCredito="";
         fVenceTCredito="05/2020";
-        valorTotal=BigDecimal.valueOf(0);        
+        this.valorTotal=BigDecimal.valueOf(0);        
     }
     
-    public List<String> getCanasta()
+    public List<Articulo> getCanasta()
     {
         return canasta;
     }
@@ -68,6 +70,8 @@ public class TransaccionMBean implements Serializable
         System.out.println("vaciar");
         numItemsEnCanasta = 0;
         canasta.clear();
+        this.valorTotal=BigDecimal.valueOf(0);
+        System.out.println("Vaciar Total="+this.valorTotal);
     }
     
     public void imprimirCanasta()
@@ -83,21 +87,25 @@ public class TransaccionMBean implements Serializable
         System.out.println("----");
     }
 
-    public void agregarArticuloACanasta(String item)
+    public void agregarArticuloACanasta(Articulo item)
     {
-        System.out.println("Se agrego:" + item);
+        System.out.println("Se agrego:" + item.getNombre() +" - " +item.getPrecioCliente());
         canasta.add(item);
+        this.valorTotal =this.valorTotal.add(item.getPrecioCliente());
         numItemsEnCanasta++;
+        System.out.println("Valor Total="+this.valorTotal);
     }
     
-    public void quitarArticuloDeCanasta(String item)
+    public void quitarArticuloDeCanasta(Articulo item)
     {
         System.out.println("Se saco:" + item);
         canasta.remove(item);
+        this.valorTotal =this.valorTotal.subtract(item.getPrecioCliente());
         numItemsEnCanasta--;
+        System.out.println("Valor Total="+this.valorTotal);
     }
     
-    public boolean estaArticulo(String item)
+    public boolean estaArticulo(Articulo item)
     {
         return canasta.contains(item);
     }
@@ -107,34 +115,19 @@ public class TransaccionMBean implements Serializable
     }
     
     public String pagar(){
-        //try{
-            Transaccion transaccion=new Transaccion();  
-            /*this.transaccion.setDuiCliente("1045021276");
-            this.transaccion.setNombreCliente("cesar");
-            this.transaccion.setEmail("cesar@udea.com");
-            this.transaccion.setNumTCredito("5582781234567890");
-            this.transaccion.setCvvTCredito("123");
-            this.transaccion.setTipoTCredito("VISA");
-            this.transaccion.setFVenceTCredito("09/2018");
-            this.transaccion.setValorTotal(BigDecimal.valueOf(2500));
-            this.transaccionFacade.create(transaccion);*/
-            transaccion.setDuiCliente(duiCliente);
-            transaccion.setNombreCliente(nombreCliente);
-            transaccion.setEmail(email);
-            transaccion.setNumTCredito(numTCredito);
-            transaccion.setCvvTCredito(cvvTCredito);
-            transaccion.setTipoTCredito(tipoTCredito);
-            transaccion.setFVenceTCredito(fVenceTCredito);
-            transaccion.setValorTotal(valorTotal);
-            this.transaccionFacade.create(transaccion);
-            return "PAGAR";
-        /*}
-        catch(ConstraintViolationException e){
-            return "Error"+e.getMessage();
-        }
-        catch(Exception e){
-            return "No fue posible generar la transacción"+e.getMessage();
-        }*/
+        
+        Transaccion transaccion=new Transaccion(); 
+        transaccion.setValorTotal(this.valorTotal);
+        transaccion.setDuiCliente(duiCliente);
+        transaccion.setNombreCliente(nombreCliente);
+        transaccion.setEmail(email);
+        transaccion.setNumTCredito(numTCredito);
+        transaccion.setCvvTCredito(cvvTCredito);
+        transaccion.setTipoTCredito(tipoTCredito);        
+        transaccion.setFVenceTCredito(fVenceTCredito);
+        this.transaccionFacade.create(transaccion);
+        return "PAGAR";
+       
     }
     
     public String validar(){
@@ -147,6 +140,7 @@ public class TransaccionMBean implements Serializable
             FacesContext context=FacesContext.getCurrentInstance();
             context.addMessage(mybutton.getClientId(context), message);
             mensajeCard="Es American Express";
+            this.tipoTCredito="American Express";
             disabled=false;
             this.setMensajeCard(mensajeCard);
             return this.getMensajeCard();
@@ -156,6 +150,7 @@ public class TransaccionMBean implements Serializable
             FacesContext context=FacesContext.getCurrentInstance();
             context.addMessage(mybutton.getClientId(context), message);
             mensajeCard="Es Diners";
+            this.tipoTCredito="Diners";
             disabled=false;
             this.setMensajeCard(mensajeCard);
             return this.getMensajeCard();
@@ -165,6 +160,7 @@ public class TransaccionMBean implements Serializable
             FacesContext context=FacesContext.getCurrentInstance();
             context.addMessage(mybutton.getClientId(context), message);
             mensajeCard="Es Visa";
+            this.tipoTCredito="Visa";
             disabled=false;
             this.setMensajeCard(mensajeCard);
             return this.getMensajeCard();
@@ -174,6 +170,7 @@ public class TransaccionMBean implements Serializable
             FacesContext context=FacesContext.getCurrentInstance();
             context.addMessage(mybutton.getClientId(context), message);
             mensajeCard="Es Mastercard";
+            this.tipoTCredito="Mastercard";
             disabled=false;
             this.setMensajeCard(mensajeCard);
             return this.getMensajeCard();

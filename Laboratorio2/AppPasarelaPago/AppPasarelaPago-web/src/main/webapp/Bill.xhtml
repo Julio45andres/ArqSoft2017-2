@@ -17,16 +17,22 @@
                 <f:facet name="Header">
                     Comprobante de pago
                 </f:facet>
+                <h:outputLabel value="Identificacion" for="identificacion" />
                 <h:outputText value="#{transaccionMBean.duiCliente}" />
+                <h:outputLabel value="NombreCliente:" for="nombreCliente" />
                 <h:outputText value="#{transaccionMBean.nombreCliente}" />
+                <h:outputLabel value="Email:" for="email" />
                 <h:outputText value="#{transaccionMBean.email}" />
+                <h:outputLabel value="NumTCredito:" for="numTCredito" />
                 <h:outputText value="#{transaccionMBean.numTCredito}" />
+                <h:outputLabel value="TipoTCredito:" for="tipoTCredito" />
                 <h:outputText value="#{transaccionMBean.tipoTCredito}" />
+                <h:outputLabel value="ValorTotal:" for="valorTotal" />
                 <h:outputText value="#{transaccionMBean.valorTotal}" />
-                <p:column headerText="Qr Code">
-                    <p:barcode value="#{transaccionMBean.duiCliente} #{transaccionMBean.valorTotal} #{transaccionMBean.fVenceTCredito}" type="qr"/>
-                </p:column>
             </p:panelGrid>
+            <p:column headerText="Qr Code">
+                <p:barcode value="#{transaccionMBean.duiCliente} #{transaccionMBean.valorTotal} #{transaccionMBean.fVenceTCredito}" type="qr" width="200px" height="200px"/>
+            </p:column>
         </h:form>
     </h:body>
 </html>
