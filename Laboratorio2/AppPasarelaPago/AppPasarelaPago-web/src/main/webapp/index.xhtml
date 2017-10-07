@@ -5,12 +5,62 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Pagina de inicio!</title>
+        <link rel="stylesheet" href="css/style.css" type="text/css" />
     </h:head>
     <h:body>
         <br />
-        <h:link outcome="#{carritoMBean.irATienda()}" value="Pasar a la tienda" />
+        <h:link outcome="#{transaccionMBean.volverAInicio()}"  value="Volver al inicio" style="display: none"/>
         <br />
-        
+        <div class="container" style="text-align: center">
+            <h1>
+                <h:link outcome="#{carritoMBean.irATienda()}" value="Ir a la tienda" class="btn btn-success btn-block"/>
+            </h1>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <h1>Arquitectura De Software</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <img src="foto/udea.jpg" width="30%"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <h2>Profesor:</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <h4>Diego José Luis Botia Valderrama</h4>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-6 col-md-offset-3">
+                    <h2>Creado por:</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <h4>César Augusto Muñoz Roldán</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <h4>María Del Pilar Arroyave Patiño</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <h4>Natalia Pérez Enamorado</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <h4>Sebastián Montoya Jiménez</h4>
+                </div>
+            </div>
+        </div>
     </h:body>
 </html>
 

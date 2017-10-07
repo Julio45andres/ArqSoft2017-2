@@ -69,4 +69,9 @@
         <managed-bean-class>com.udea.controller.Captcha</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>billMBean</managed-bean-name>
+        <managed-bean-class>com.udea.controller.BillMBean</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
 </faces-config>

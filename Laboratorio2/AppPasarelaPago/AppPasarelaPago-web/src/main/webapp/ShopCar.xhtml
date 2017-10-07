@@ -6,19 +6,25 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
+        <link rel="stylesheet" href="css/style.css" type="text/css" />
+            
         <title>Tienda Arq. Software - Lab 2</title>
     </h:head>
     <h:body>
-        <br />
-        <h:link outcome="#{carritoMBean.volverAInicio()}" value="Volver al inicio" />
-        <br />
-        <h:link outcome="#{carritoMBean.irACaja()}" value="Pasar a la caja" />
-        <br />
+        <div class="container">
+        
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="active sizeLetras"><a href="#">Articulos</a></li>
+            <li role="presentation" class="sizeLetras"><h:link outcome="#{carritoMBean.irACaja()}" value="Pasar a la caja" /></li>
+            <li role="presentation" class="sizeLetras"><h:link outcome="#{carritoMBean.volverAInicio()}" value="Volver al inicio" /></li>
+        </ul>
+        
+        
         <f:view>
 
 
             <h:form>
-                <h1><h:outputText value="Articulos Disponibles"/></h1>
+                <h3><h:outputText value="Articulos Disponibles"/></h3>
                 <p:dataTable value="#{carritoMBean.productos}" 
                              var="item"
                              rows="10"
@@ -54,8 +60,8 @@
                 </p:dataTable>
             </h:form>
         </f:view>
-
-       
+            
+       </div>
     </h:body>
 </html>
 

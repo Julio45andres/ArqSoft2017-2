@@ -3,10 +3,12 @@ package com.udea.controller;
 import com.udea.dao.ComprobanteFacadeLocal;
 import com.udea.dao.TransaccionFacadeLocal;
 import com.udea.modelo.Articulo;
+import com.udea.modelo.Comprobante;
 import com.udea.modelo.Transaccion;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import javax.ejb.EJB;
@@ -43,20 +45,29 @@ public class TransaccionMBean implements Serializable
     private UIComponent mybutton;
     private Locale locale=FacesContext.getCurrentInstance().getViewRoot().getLocale();
     private boolean disabled=true;
+    private boolean disabledRecibo=true;
     private String sSubCadena;
     private String mensajeCard;
     private String m;
+
+    public boolean isDisabledRecibo() {
+        return disabledRecibo;
+    }
+
+    public void setDisabledRecibo(boolean disabledRecibo) {
+        this.disabledRecibo = disabledRecibo;
+    }
     
     public TransaccionMBean()
     {
-        numItemsEnCanasta = 0;        
-        this.duiCliente="1045";
-        nombreCliente="CESAR";
-        email="cesar@udea.com";
-        numTCredito="1111111111";
-        this.cvvTCredito="111";        
-        tipoTCredito="";
-        fVenceTCredito="05/2020";
+        this.numItemsEnCanasta = 0;        
+        this.duiCliente="";
+        this.nombreCliente="";
+        this.email="";
+        this.numTCredito="";
+        this.cvvTCredito="";        
+        this.tipoTCredito="";
+        this.fVenceTCredito="";
         this.valorTotal=BigDecimal.valueOf(0);        
     }
     
@@ -126,8 +137,27 @@ public class TransaccionMBean implements Serializable
         transaccion.setTipoTCredito(tipoTCredito);        
         transaccion.setFVenceTCredito(fVenceTCredito);
         this.transaccionFacade.create(transaccion);
+        int ultimoId=this.transaccionFacade.count();
+        Comprobante comprobante=new Comprobante();
+        comprobante.setIdComprobante(ultimoId);
+        comprobante.setFechaPago(new Date());
+        comprobante.setValorTransaccion(transaccion.getValorTotal());
+        comprobante.setDuiCliente(transaccion.getDuiCliente());
+        this.comprobanteFacade.create(comprobante);
+        
+        try{
+            FacesContext contex = FacesContext.getCurrentInstance();
+            contex.getExternalContext().redirect( "view/Bill.xhtml");
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
         return "PAGAR";
-       
+    }
+    
+    public String Recibo(){
+        this.canasta.clear();
+        return "PAGAR";
     }
     
     public String validar(){
@@ -179,6 +209,7 @@ public class TransaccionMBean implements Serializable
            FacesMessage message= new FacesMessage("Invalid card");
            FacesContext context= FacesContext.getCurrentInstance();
            context.addMessage(mybutton.getClientId(context), message);
+           disabled=true;
         }
         return null;
     }
@@ -333,6 +364,19 @@ public class TransaccionMBean implements Serializable
         this.m = m;
     }
     
-   
+    public String volverAInicio()
+    {
+        this.numItemsEnCanasta = 0;        
+        this.duiCliente="";
+        this.nombreCliente="";
+        this.email="";
+        this.numTCredito="";
+        this.cvvTCredito="";        
+        this.tipoTCredito="";
+        this.fVenceTCredito="";
+        this.valorTotal=BigDecimal.valueOf(0);
+        this.canasta.clear();
+        return "INICIO";
+    }
     
 }

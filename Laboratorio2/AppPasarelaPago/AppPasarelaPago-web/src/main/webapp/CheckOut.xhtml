@@ -5,65 +5,102 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Facelet Title</title>
+        <link rel="stylesheet" href="css/style.css" type="text/css" />
+        <title>CheckOut</title>
     </h:head>
     <h:body>
+        <div class="container" style="text-align: center">
+            
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="sizeLetras"><h:link outcome="#{carritoMBean.volverATienda()}" value="Pasar a la tienda" /></li>
+            <li role="presentation" class="active sizeLetras"><a href="#">Caja</a></li>
+            <li role="presentation" class="sizeLetras"><h:link outcome="#{carritoMBean.volverAInicio()}" value="Volver al inicio" /></li>
+        </ul>
+        
         <br />
-        <h:link outcome="#{carritoMBean.volverAInicio()}" value="Volver al inicio" />
-        <br />
-        <h:link outcome="#{carritoMBean.volverATienda()}" value="Pasar a la tienda" />
-        <br />
-        <h:link outcome="#{carritoMBean.pagarArticulos()}" value="Pagar" />
+            <h:form>
+                <h:commandLink value="Vaciar carrito" actionListener="#{transaccionMBean.vaciarCanasta()}" class="btn btn-warning"/>
+            </h:form>  
+        <!--<h:link outcome="#{carritoMBean.pagarArticulos()}" value="Pagar" />-->
         <br />
         
-
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
         
-        <h:form>
-            <h:commandLink value="Vaciar carrito" actionListener="#{transaccionMBean.vaciarCanasta()}" />
-        </h:form>
-        
+                
+                <h:form prependId="false">
+                    <!--
+                    <h:commandButton action="${transaccionMBean.changeLanguage('')}" value="English"></h:commandButton>
+                    <h:commandButton action="${transaccionMBean.changeLanguage('es')}" value="Español"></h:commandButton>
+                    -->
+                    <br />
+                    <h:panelGrid columns="2">
+                        <f:facet name="header">
+                            Registro de la transacción
+                        </f:facet>
+                        
+                        <p:outputLabel value="Identificacion" for="identificacion" />
+                        <p:inputText id="identificacion" value="#{transaccionMBean.duiCliente}" title="Identificacion" required="true" requiredMessage="The Identificacion field is required." maxlength="20" />                
+                        <p:outputLabel value="NombreCliente:" for="nombreCliente" />
+                        <p:inputText id="nombreCliente" value="#{transaccionMBean.nombreCliente}" title="NombreCliente" required="true" requiredMessage="The NombreCliente field is required." maxlength="50"/>                
+                        
+                        <p:outputLabel value="Email:" for="email" />
+                        <p:inputText id="email" value="#{transaccionMBean.email}" title="Email" required="true" requiredMessage="The Email field is required." maxlength="50"/>
+                        <p:outputLabel value="NumTCredito:" for="numTCredito" />
+                        <p:inputText id="numTCredito" value="#{transaccionMBean.numTCredito}" title="NumTCredito" required="true" requiredMessage="The NumTCredito field is required." maxlength="20"/>
+                        <p:outputLabel value="CvvTCredito:" for="cvvTCredito" />
+                        <p:inputText id="cvvTCredito" value="#{transaccionMBean.cvvTCredito}" title="CvvTCredito" required="true" requiredMessage="The CvvTCredito field is required." maxlength="3">
+                            <f:validateLength minimum="3" />
+                        </p:inputText>
+                        <p:outputLabel value="TipoTCredito:" for="tipoTCredito" />
+                        <p:inputText id="tipoTCredito" value="#{transaccionMBean.tipoTCredito}" title="TipoTCredito" required="true" requiredMessage="The TipoTCredito field is required." maxlength="50" />
+                        <p:outputLabel value="FVenceTCredito:" for="FVenceTCredito" />
+                        <p:inputText id="FVenceTCredito" value="#{transaccionMBean.fVenceTCredito}" title="FVenceTCredito" required="true" requiredMessage="The FVenceTCredito field is required." maxlength="7" />
+                        <p:outputLabel value="ValorTotal:" for="valorTotal" />
+                        <p:inputText id="valorTotal" value="#{transaccionMBean.valorTotal}" title="ValorTotal" required="true" requiredMessage="The ValorTotal field is required." readonly="true"/>
+                    </h:panelGrid>
+                    <br />
+                    <!--<p:message id="msg" />-->
+                    <p:captcha id="captcha"></p:captcha>
+                    <br />
+                    <p:commandButton id="mybutton" binding="#{transaccionMBean.mybutton}" actionListener="#{transaccionMBean.validar()}" ajax="false" value="Validar"/>
+                    <p:commandButton id="x" value="Realizar Pago" actionListener="#{transaccionMBean.pagar()}" disabled="#{transaccionMBean.disabled}" ajax="false"/>
+                    
+                    <h:message for="mybutton" />
+                </h:form>
+                </div>
+            </div>
         <f:view>
-            <h:form prependId="false">
-                <h:commandButton action="${transaccionMBean.changeLanguage('')}" value="English"></h:commandButton>
-                <h:commandButton action="${transaccionMBean.changeLanguage('es')}" value="Español"></h:commandButton>
-                
-                <p:panelGrid columns="2">
-                    <f:facet name="header">
-                        Registro de la transacción
-                    </f:facet>
-                    <h:outputLabel value="Identificacion" for="identificacion" />
-                    <h:inputText id="identificacion" value="#{transaccionMBean.duiCliente}" title="Identificacion" required="true" requiredMessage="The Identificacion field is required." maxlength="20"/>                
-                    <h:outputLabel value="NombreCliente:" for="nombreCliente" />
-                    <h:inputText id="nombreCliente" value="#{transaccionMBean.nombreCliente}" title="NombreCliente" required="true" requiredMessage="The NombreCliente field is required." maxlength="50"/>                
-                    <h:outputLabel value="Email:" for="email" />
-                    <h:inputText id="email" value="#{transaccionMBean.email}" title="Email" required="true" requiredMessage="The Email field is required." maxlength="50"/>
-                    <h:outputLabel value="NumTCredito:" for="numTCredito" />
-                    <h:inputText id="numTCredito" value="#{transaccionMBean.numTCredito}" title="NumTCredito" required="true" requiredMessage="The NumTCredito field is required." maxlength="20"/>
-                    <h:outputLabel value="CvvTCredito:" for="cvvTCredito" />
-                    <h:inputText id="cvvTCredito" value="#{transaccionMBean.cvvTCredito}" title="CvvTCredito" required="true" requiredMessage="The CvvTCredito field is required." maxlength="3">
-                        <f:validateLength minimum="3" />
-                    </h:inputText>
-                    <h:outputLabel value="TipoTCredito:" for="tipoTCredito" />
-                    <h:inputText id="tipoTCredito" value="#{transaccionMBean.tipoTCredito}" title="TipoTCredito" required="true" requiredMessage="The TipoTCredito field is required." maxlength="50" readonly="true"/>
-                    <h:outputLabel value="FVenceTCredito:" for="FVenceTCredito" />
-                    <h:inputText id="FVenceTCredito" value="#{transaccionMBean.fVenceTCredito}" title="FVenceTCredito" required="true" requiredMessage="The FVenceTCredito field is required." maxlength="7" />
-                    <h:outputLabel value="ValorTotal:" for="valorTotal" />
-                    <h:inputText id="valorTotal" value="#{transaccionMBean.valorTotal}" title="ValorTotal" required="true" requiredMessage="The ValorTotal field is required." readonly="true"/>
-                </p:panelGrid>
-                <br />
-                <!--<p:message id="msg" />-->
-                <p:captcha id="captcha"></p:captcha>
-                <br />
-                <p:commandButton id="mybutton" binding="#{transaccionMBean.mybutton}" actionListener="#{transaccionMBean.validar()}" ajax="false" value="Validar"/> 
-                <p:commandButton id="x" value="Realizar Pago" actionListener="#{transaccionMBean.pagar()}" disabled="#{transaccionMBean.disabled}" action="submit"/>
-                <h:link outcome="PAGAR" value="Ver Recibo" disabled="#{transaccionMBean.disabled}" />
-                
-                <h:message for="mybutton" />
+
+
+            <h:form>
+                <h1><h:outputText value="Carrito"/></h1>
+                <p:dataTable value="#{transaccionMBean.canasta}" var="item"
+                             rows="3"
+                             paginator="true">                    
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Nombre"/>
+                        </f:facet>
+                        <h:outputText value="#{item.nombre}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Descripcion"/>
+                        </f:facet>
+                        <h:outputText value="#{item.descripcion}"/>
+                    </p:column>                    
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="PrecioCliente"/>
+                        </f:facet>
+                        <h:outputText value="#{item.precioCliente}"/>
+                    </p:column>
+                </p:dataTable>
             </h:form>
-     
         </f:view>
 
-        
+        </div>        
     </h:body>
 </html>
 
