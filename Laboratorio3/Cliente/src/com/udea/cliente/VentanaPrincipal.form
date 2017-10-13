@@ -27,8 +27,8 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jpResultados" max="32767" attributes="0"/>
-                  <Component id="jpOpciones" max="32767" attributes="0"/>
+                  <Component id="jpResultado" max="32767" attributes="0"/>
+                  <Component id="jpFigura" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jlAreaDibujo" pref="491" max="32767" attributes="0"/>
@@ -43,9 +43,9 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jlAreaDibujo" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
-                      <Component id="jpOpciones" max="32767" attributes="0"/>
+                      <Component id="jpFigura" max="32767" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jpResultados" min="-2" max="-2" attributes="0"/>
+                      <Component id="jpResultado" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -54,11 +54,11 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JPanel" name="jpOpciones">
+    <Container class="javax.swing.JPanel" name="jpFigura">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder justification="2" position="2" title="Opciones">
+            <TitledBorder justification="2" position="2" title="Figura">
               <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                 <LineBorder thickness="2"/>
               </Border>
@@ -75,17 +75,17 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jlP2" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jlOpcion" alignment="0" max="32767" attributes="0"/>
                       <Component id="jlP1" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jlFigura" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jlP3" max="32767" attributes="0"/>
+                      <Component id="jlP2" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jlP3" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jtfP1" max="32767" attributes="0"/>
                       <Component id="jtfP2" max="32767" attributes="0"/>
                       <Component id="jtfP3" max="32767" attributes="0"/>
-                      <Component id="jcbFigura" alignment="1" max="32767" attributes="0"/>
+                      <Component id="jcbOpcion" alignment="1" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -103,8 +103,8 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jlFigura" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jcbFigura" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jlOpcion" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jcbOpcion" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -132,12 +132,12 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="jlFigura">
+        <Component class="javax.swing.JLabel" name="jlOpcion">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Comic Sans MS" size="20" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Figura:"/>
+            <Property name="text" type="java.lang.String" value="Opci&#xf3;n:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jlP1">
@@ -164,26 +164,33 @@
             <Property name="text" type="java.lang.String" value="P3:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jcbFigura">
+        <Component class="javax.swing.JComboBox" name="jcbOpcion">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Comic Sans MS" size="18" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="7">
-                <StringItem index="0" value="Rect&#xe1;ngulo"/>
-                <StringItem index="1" value="Elipse"/>
-                <StringItem index="2" value="Triangulo"/>
-                <StringItem index="3" value="Cubo"/>
-                <StringItem index="4" value="Cilindro"/>
-                <StringItem index="5" value="Pir&#xe1;mide"/>
-                <StringItem index="6" value="Cono"/>
+              <StringArray count="14">
+                <StringItem index="0" value="Rect&#xe1;ngulo - &#xc1;rea"/>
+                <StringItem index="1" value="Rect&#xe1;ngulo - Per&#xed;metro"/>
+                <StringItem index="2" value="Elipse - &#xc1;rea"/>
+                <StringItem index="3" value="Elipse - Per&#xed;metro"/>
+                <StringItem index="4" value="Triangulo - &#xc1;rea"/>
+                <StringItem index="5" value="Triangulo - Per&#xed;metro"/>
+                <StringItem index="6" value="Cubo - &#xc1;rea"/>
+                <StringItem index="7" value="Cubo - Volumen"/>
+                <StringItem index="8" value="Cilindro - &#xc1;rea"/>
+                <StringItem index="9" value="Cilindro - Volumen"/>
+                <StringItem index="10" value="Pir&#xe1;mide - &#xc1;rea"/>
+                <StringItem index="11" value="Pir&#xe1;mide - Volumen"/>
+                <StringItem index="12" value="Cono - &#xc1;rea"/>
+                <StringItem index="13" value="Cono - Volumen"/>
               </StringArray>
             </Property>
             <Property name="selectedIndex" type="int" value="-1"/>
           </Properties>
           <Events>
-            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jcbFiguraItemStateChanged"/>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jcbOpcionItemStateChanged"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -194,6 +201,10 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Comic Sans MS" size="18" style="0"/>
             </Property>
+            <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="0" red="0" type="rgb"/>
+            </Property>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jtfP3">
@@ -201,6 +212,10 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Comic Sans MS" size="18" style="0"/>
             </Property>
+            <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="0" red="0" type="rgb"/>
+            </Property>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jtfP2">
@@ -208,6 +223,10 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Comic Sans MS" size="18" style="0"/>
             </Property>
+            <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="0" red="0" type="rgb"/>
+            </Property>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jbAnalizar">
@@ -234,7 +253,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JPanel" name="jpResultados">
+    <Container class="javax.swing.JPanel" name="jpResultado">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -254,7 +273,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jspResultados" max="32767" attributes="0"/>
+                  <Component id="jspResultado" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -263,21 +282,21 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jspResultados" pref="75" max="32767" attributes="0"/>
+                  <Component id="jspResultado" pref="75" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="javax.swing.JScrollPane" name="jspResultados">
+        <Container class="javax.swing.JScrollPane" name="jspResultado">
           <AuxValues>
             <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
           </AuxValues>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTextArea" name="jtaResultados">
+            <Component class="javax.swing.JTextArea" name="jtaResultado">
               <Properties>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">

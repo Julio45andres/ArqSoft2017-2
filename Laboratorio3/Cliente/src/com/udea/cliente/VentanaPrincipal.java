@@ -2,12 +2,19 @@ package com.udea.cliente;
 
 // Se importan los paquetes que necesita la clase
 import Imagenes.PanelPrincipal;
+import com.edu.rmi.IFiguras;
 import java.awt.Image;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import javax.swing.ImageIcon;
 
 // Ventana principal para el cliente
 public class VentanaPrincipal extends javax.swing.JFrame
 {
+    // Variable para referenciar el objeto remoto que tiene los procedimientos que calculan las caracteristicas de las figuras geometricas
+    private static IFiguras clienteFiguras = null;
+    
     // Variable para realizar el dibujado de las figuras geometricas
     //Graficador dibujo = new Graficador();
     
@@ -30,6 +37,19 @@ public class VentanaPrincipal extends javax.swing.JFrame
         // Y se agrega un fondo a esta ventana
         PanelPrincipal panelConFondo = new PanelPrincipal();
         add(panelConFondo);
+        
+        // Antes de terminar la construccion de esta ventana, se procede a realizar la conexion con el servidor
+        if (conectarAlServidor())
+        {
+            // Si la conexion es exitoso se muestra un mensaje y se permite al programa continuar
+            System.out.println("Conexión establecida!");
+        }
+        else // Si la conexion es fallida entonces
+        {
+            // Se imprime por consola el error y se termina el aplicativo
+            System.out.println("No se pudo establecer conexion con el servidor!");
+            System.exit(0);
+        }
     }
     
     // Metodo para borrar o reiniciar los estados de los componentes de la ventana
@@ -44,9 +64,26 @@ public class VentanaPrincipal extends javax.swing.JFrame
         jtfP1.setEnabled(false);
         jtfP2.setEnabled(false);
         jtfP3.setEnabled(false);
-        jtaResultados.setText("");
+        jtaResultado.setText("");
         jlAreaDibujo.setIcon(null);
         //dibujo.limpiar();
+    }
+    
+    // Metodo que realiza la conexion con el servidor e inicializa clienteFiguras con la direccion o referencia de donde esta el servidor
+    // Si la conexion fue exitosa devuelve verdadero, de lo contrario falso
+    private static boolean conectarAlServidor()
+    {
+        try
+        {
+            Registry registro = LocateRegistry.getRegistry("127.0.0.1", 1099);
+            clienteFiguras = (IFiguras) registro.lookup("ServidorFiguras");
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+        
+        return true;
     }
     
     /**
@@ -58,30 +95,30 @@ public class VentanaPrincipal extends javax.swing.JFrame
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jpOpciones = new javax.swing.JPanel();
-        jlFigura = new javax.swing.JLabel();
+        jpFigura = new javax.swing.JPanel();
+        jlOpcion = new javax.swing.JLabel();
         jlP1 = new javax.swing.JLabel();
         jlP2 = new javax.swing.JLabel();
         jlP3 = new javax.swing.JLabel();
-        jcbFigura = new javax.swing.JComboBox<>();
+        jcbOpcion = new javax.swing.JComboBox<>();
         jtfP1 = new javax.swing.JTextField();
         jtfP3 = new javax.swing.JTextField();
         jtfP2 = new javax.swing.JTextField();
         jbAnalizar = new javax.swing.JButton();
         jbLimpiar = new javax.swing.JButton();
-        jpResultados = new javax.swing.JPanel();
-        jspResultados = new javax.swing.JScrollPane();
-        jtaResultados = new javax.swing.JTextArea();
+        jpResultado = new javax.swing.JPanel();
+        jspResultado = new javax.swing.JScrollPane();
+        jtaResultado = new javax.swing.JTextArea();
         jlAreaDibujo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        jpOpciones.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "Opciones", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Comic Sans MS", 1, 24))); // NOI18N
-        jpOpciones.setOpaque(false);
+        jpFigura.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "Figura", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Comic Sans MS", 1, 24))); // NOI18N
+        jpFigura.setOpaque(false);
 
-        jlFigura.setFont(new java.awt.Font("Comic Sans MS", 1, 20)); // NOI18N
-        jlFigura.setText("Figura:");
+        jlOpcion.setFont(new java.awt.Font("Comic Sans MS", 1, 20)); // NOI18N
+        jlOpcion.setText("Opción:");
 
         jlP1.setFont(new java.awt.Font("Comic Sans MS", 1, 20)); // NOI18N
         jlP1.setText("P1:");
@@ -92,20 +129,26 @@ public class VentanaPrincipal extends javax.swing.JFrame
         jlP3.setFont(new java.awt.Font("Comic Sans MS", 1, 20)); // NOI18N
         jlP3.setText("P3:");
 
-        jcbFigura.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
-        jcbFigura.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Rectángulo", "Elipse", "Triangulo", "Cubo", "Cilindro", "Pirámide", "Cono" }));
-        jcbFigura.setSelectedIndex(-1);
-        jcbFigura.addItemListener(new java.awt.event.ItemListener() {
+        jcbOpcion.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        jcbOpcion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Rectángulo - Área", "Rectángulo - Perímetro", "Elipse - Área", "Elipse - Perímetro", "Triangulo - Área", "Triangulo - Perímetro", "Cubo - Área", "Cubo - Volumen", "Cilindro - Área", "Cilindro - Volumen", "Pirámide - Área", "Pirámide - Volumen", "Cono - Área", "Cono - Volumen" }));
+        jcbOpcion.setSelectedIndex(-1);
+        jcbOpcion.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jcbFiguraItemStateChanged(evt);
+                jcbOpcionItemStateChanged(evt);
             }
         });
 
         jtfP1.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        jtfP1.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        jtfP1.setEnabled(false);
 
         jtfP3.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        jtfP3.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        jtfP3.setEnabled(false);
 
         jtfP2.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        jtfP2.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        jtfP2.setEnabled(false);
 
         jbAnalizar.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
         jbAnalizar.setText("Analizar");
@@ -123,81 +166,81 @@ public class VentanaPrincipal extends javax.swing.JFrame
             }
         });
 
-        javax.swing.GroupLayout jpOpcionesLayout = new javax.swing.GroupLayout(jpOpciones);
-        jpOpciones.setLayout(jpOpcionesLayout);
-        jpOpcionesLayout.setHorizontalGroup(
-            jpOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpOpcionesLayout.createSequentialGroup()
+        javax.swing.GroupLayout jpFiguraLayout = new javax.swing.GroupLayout(jpFigura);
+        jpFigura.setLayout(jpFiguraLayout);
+        jpFiguraLayout.setHorizontalGroup(
+            jpFiguraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpFiguraLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jpOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jlP2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jpFiguraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jlOpcion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jlP1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jlFigura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jlP2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jlP3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jpOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jpFiguraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jtfP1)
                     .addComponent(jtfP2)
                     .addComponent(jtfP3)
-                    .addComponent(jcbFigura, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jcbOpcion, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(jpOpcionesLayout.createSequentialGroup()
+            .addGroup(jpFiguraLayout.createSequentialGroup()
                 .addGap(98, 98, 98)
                 .addComponent(jbAnalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jbLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(95, Short.MAX_VALUE))
         );
-        jpOpcionesLayout.setVerticalGroup(
-            jpOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpOpcionesLayout.createSequentialGroup()
+        jpFiguraLayout.setVerticalGroup(
+            jpFiguraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpFiguraLayout.createSequentialGroup()
                 .addGap(8, 8, 8)
-                .addGroup(jpOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlFigura)
-                    .addComponent(jcbFigura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jpFiguraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlOpcion)
+                    .addComponent(jcbOpcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jpFiguraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlP1)
                     .addComponent(jtfP1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jpFiguraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlP2)
                     .addComponent(jtfP2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jpFiguraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlP3)
                     .addComponent(jtfP3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jpOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jpFiguraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbAnalizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(11, 11, 11))
         );
 
-        jpResultados.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "Resultados", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Comic Sans MS", 1, 24))); // NOI18N
-        jpResultados.setOpaque(false);
+        jpResultado.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "Resultados", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Comic Sans MS", 1, 24))); // NOI18N
+        jpResultado.setOpaque(false);
 
-        jtaResultados.setColumns(20);
-        jtaResultados.setFont(new java.awt.Font("Comic Sans MS", 1, 20)); // NOI18N
-        jtaResultados.setRows(2);
-        jtaResultados.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        jtaResultados.setEnabled(false);
-        jspResultados.setViewportView(jtaResultados);
+        jtaResultado.setColumns(20);
+        jtaResultado.setFont(new java.awt.Font("Comic Sans MS", 1, 20)); // NOI18N
+        jtaResultado.setRows(2);
+        jtaResultado.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        jtaResultado.setEnabled(false);
+        jspResultado.setViewportView(jtaResultado);
 
-        javax.swing.GroupLayout jpResultadosLayout = new javax.swing.GroupLayout(jpResultados);
-        jpResultados.setLayout(jpResultadosLayout);
-        jpResultadosLayout.setHorizontalGroup(
-            jpResultadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpResultadosLayout.createSequentialGroup()
+        javax.swing.GroupLayout jpResultadoLayout = new javax.swing.GroupLayout(jpResultado);
+        jpResultado.setLayout(jpResultadoLayout);
+        jpResultadoLayout.setHorizontalGroup(
+            jpResultadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpResultadoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jspResultados)
+                .addComponent(jspResultado)
                 .addContainerGap())
         );
-        jpResultadosLayout.setVerticalGroup(
-            jpResultadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpResultadosLayout.createSequentialGroup()
+        jpResultadoLayout.setVerticalGroup(
+            jpResultadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpResultadoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jspResultados, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                .addComponent(jspResultado, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -212,8 +255,8 @@ public class VentanaPrincipal extends javax.swing.JFrame
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jpResultados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jpOpciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jpResultado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jpFigura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jlAreaDibujo, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE)
                 .addContainerGap())
@@ -225,68 +268,295 @@ public class VentanaPrincipal extends javax.swing.JFrame
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jlAreaDibujo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jpOpciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jpFigura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(jpResultados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jpResultado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jcbFiguraItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcbFiguraItemStateChanged
-        jtaResultados.setText("Se selecciono: " + jcbFigura.getSelectedIndex());
-        
-        switch (jcbFigura.getSelectedIndex())
+    // Evento disparado cuando se cambia la figura a estudiar o se limpia la ventana
+    private void jcbOpcionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcbOpcionItemStateChanged
+        switch (jcbOpcion.getSelectedIndex())
         {
             case 0:
-                
-                break;
             case 1:
+                jlP1.setText("a:");
+                jlP2.setText("b:");
+                jlP3.setText("NA:");
+                jtfP1.setText("");
+                jtfP2.setText("");
+                jtfP3.setText("---");
+                jtfP1.setEnabled(true);
+                jtfP2.setEnabled(true);
+                jtfP3.setEnabled(false);
+                jtaResultado.setText("");
+                jlAreaDibujo.setIcon(null);
                 
                 break;
             case 2:
-                
-                break;
             case 3:
+                jlP1.setText("r1:");
+                jlP2.setText("r2:");
+                jlP3.setText("NA:");
+                jtfP1.setText("");
+                jtfP2.setText("");
+                jtfP3.setText("---");
+                jtfP1.setEnabled(true);
+                jtfP2.setEnabled(true);
+                jtfP3.setEnabled(false);
+                jtaResultado.setText("");
+                jlAreaDibujo.setIcon(null);
                 
                 break;
             case 4:
+                jlP1.setText("b:");
+                jlP2.setText("h:");
+                jlP3.setText("NA:");
+                jtfP1.setText("");
+                jtfP2.setText("");
+                jtfP3.setText("---");
+                jtfP1.setEnabled(true);
+                jtfP2.setEnabled(true);
+                jtfP3.setEnabled(false);
+                jtaResultado.setText("");
+                jlAreaDibujo.setIcon(null);
                 
                 break;
             case 5:
+                jlP1.setText("a:");
+                jlP2.setText("b:");
+                jlP3.setText("c:");
+                jtfP1.setText("");
+                jtfP2.setText("");
+                jtfP3.setText("");
+                jtfP1.setEnabled(true);
+                jtfP2.setEnabled(true);
+                jtfP3.setEnabled(true);
+                jtaResultado.setText("");
+                jlAreaDibujo.setIcon(null);
                 
                 break;
             case 6:
+            case 7:
+                jlP1.setText("a:");
+                jlP2.setText("b:");
+                jlP3.setText("c:");
+                jtfP1.setText("");
+                jtfP2.setText("");
+                jtfP3.setText("");
+                jtfP1.setEnabled(true);
+                jtfP2.setEnabled(true);
+                jtfP3.setEnabled(true);
+                jtaResultado.setText("");
+                jlAreaDibujo.setIcon(null);
+                
+                break;
+            case 8:
+            case 9:
+                jlP1.setText("r:");
+                jlP2.setText("h:");
+                jlP3.setText("NA:");
+                jtfP1.setText("");
+                jtfP2.setText("");
+                jtfP3.setText("---");
+                jtfP1.setEnabled(true);
+                jtfP2.setEnabled(true);
+                jtfP3.setEnabled(false);
+                jtaResultado.setText("");
+                jlAreaDibujo.setIcon(null);
+                
+                break;
+            case 10:
+                jlP1.setText("l:");
+                jlP2.setText("ap:");
+                jlP3.setText("NA:");
+                jtfP1.setText("");
+                jtfP2.setText("");
+                jtfP3.setText("---");
+                jtfP1.setEnabled(true);
+                jtfP2.setEnabled(true);
+                jtfP3.setEnabled(false);
+                jtaResultado.setText("");
+                jlAreaDibujo.setIcon(null);
+                
+                break;
+            case 11:
+                jlP1.setText("l:");
+                jlP2.setText("h:");
+                jlP3.setText("NA:");
+                jtfP1.setText("");
+                jtfP2.setText("");
+                jtfP3.setText("---");
+                jtfP1.setEnabled(true);
+                jtfP2.setEnabled(true);
+                jtfP3.setEnabled(false);
+                jtaResultado.setText("");
+                jlAreaDibujo.setIcon(null);
+                
+                break;
+            case 12:
+                jlP1.setText("g:");
+                jlP2.setText("r:");
+                jlP3.setText("NA:");
+                jtfP1.setText("");
+                jtfP2.setText("");
+                jtfP3.setText("---");
+                jtfP1.setEnabled(true);
+                jtfP2.setEnabled(true);
+                jtfP3.setEnabled(false);
+                jtaResultado.setText("");
+                jlAreaDibujo.setIcon(null);
+                
+                break;
+            case 13:
+                jlP1.setText("h:");
+                jlP2.setText("r:");
+                jlP3.setText("NA:");
+                jtfP1.setText("");
+                jtfP2.setText("");
+                jtfP3.setText("---");
+                jtfP1.setEnabled(true);
+                jtfP2.setEnabled(true);
+                jtfP3.setEnabled(false);
+                jtaResultado.setText("");
+                jlAreaDibujo.setIcon(null);
                 
                 break;
             default:
                 limpiarPantalla();
                 break;
         }
-    }//GEN-LAST:event_jcbFiguraItemStateChanged
+    }//GEN-LAST:event_jcbOpcionItemStateChanged
 
+    // Evento disparado cuando el usuario oprime el boton Analizar
     private void jbAnalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAnalizarActionPerformed
+        // Si todavia no se ha elegido una accion entonces
+        if (jcbOpcion.getSelectedIndex() < 0)
+        {
+            return; // Se retorna de inmediato
+        }
         
+        // Si pasa aqui se crean 3 variables auxiliares cuyo proposito es recuperar y castear los valores ingresados por el usuario
+        Double temp1, temp2, temp3, resul;
+        
+        try
+        {
+            temp1 = Double.parseDouble(jtfP1.getText());
+            temp2 = Double.parseDouble(jtfP2.getText());
+            
+            // Si la operacion seleccionada es:
+            switch (jcbOpcion.getSelectedIndex())
+            {
+                case 0:
+                    resul = clienteFiguras.areaRectangulo(temp1, temp2);
+
+                    jtaResultado.setText("El área del rectángulo es:\n" + resul);
+                    break;
+                case 1:
+                    resul = clienteFiguras.permitroRectangulo(temp1, temp2);
+
+                    jtaResultado.setText("El perímetro del rectángulo es:\n" + resul);
+                    break;
+                case 2:
+                    resul = clienteFiguras.areaElipse(temp1, temp2);
+
+                    jtaResultado.setText("El área de la elipse es:\n" + resul);
+                    break;
+                case 3:
+                    resul = clienteFiguras.permitroElipse(temp1, temp2);
+
+                    jtaResultado.setText("El perímetro de la elipse es:\n" + resul);
+                    break;
+                case 4:
+                    resul = clienteFiguras.areaTriangulo(temp1, temp2);
+
+                    jtaResultado.setText("El área del triángulo es:\n" + resul);
+                    break;
+                case 5:
+                    temp3 = Double.parseDouble(jtfP3.getText());
+
+                    resul = clienteFiguras.permitroTriangulo(temp1, temp2, temp3);
+
+                    jtaResultado.setText("El perímetro del triángulo es:\n" + resul);
+                    break;
+                case 6:
+                    temp3 = Double.parseDouble(jtfP3.getText());
+
+                    resul = clienteFiguras.areaCubo(temp1, temp2, temp3);
+
+                    jtaResultado.setText("El área del cubo es:\n" + resul);
+                    break;
+                case 7:
+                    temp3 = Double.parseDouble(jtfP3.getText());
+
+                    resul = clienteFiguras.volumenCubo(temp1, temp2, temp3);
+
+                    jtaResultado.setText("El volumen del cubo es:\n" + resul);
+                    break;
+                case 8:
+                    resul = clienteFiguras.areaCilindro(temp1, temp2);
+
+                    jtaResultado.setText("El área del cilindro es:\n" + resul);
+                    break;
+                case 9:
+                    resul = clienteFiguras.volumenCilindro(temp1, temp2);
+
+                    jtaResultado.setText("El volumen del cilindro es:\n" + resul);
+                    break;
+                case 10:
+                    resul = clienteFiguras.areaPiramide(temp1, temp2);
+
+                    jtaResultado.setText("El área de la pirámide es:\n" + resul);
+                    break;
+                case 11:
+                    resul = clienteFiguras.volumenPiramide(temp1, temp2);
+
+                    jtaResultado.setText("El volumen de la pirámide es:\n" + resul);
+                    break;
+                case 12:
+                    resul = clienteFiguras.areaCono(temp1, temp2);
+
+                    jtaResultado.setText("El área del cono es:\n" + resul);
+                    break;
+                case 13:
+                    resul = clienteFiguras.volumenCono(temp1, temp2);
+
+                    jtaResultado.setText("El volumen del cono es:\n" + resul);
+                    break;
+            }
+        }
+        catch(NumberFormatException nfe)
+        {
+            jtaResultado.setText("Revise sus parametros de entrada!");
+        }
+        catch(RemoteException re)
+        {
+            System.out.println("Se perdio la conexion con el servidor!");
+            System.exit(0);
+        }
     }//GEN-LAST:event_jbAnalizarActionPerformed
 
+    // Evento disparado cuando el usuario oprime el boton Limpiar
     private void jbLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimpiarActionPerformed
-        jcbFigura.setSelectedIndex(-1);
+        jcbOpcion.setSelectedIndex(-1); // Para limpiar la ventana tan solo basta reiniciar el selector de opciones
     }//GEN-LAST:event_jbLimpiarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jbAnalizar;
     private javax.swing.JButton jbLimpiar;
-    private javax.swing.JComboBox<String> jcbFigura;
+    private javax.swing.JComboBox<String> jcbOpcion;
     private javax.swing.JLabel jlAreaDibujo;
-    private javax.swing.JLabel jlFigura;
+    private javax.swing.JLabel jlOpcion;
     private javax.swing.JLabel jlP1;
     private javax.swing.JLabel jlP2;
     private javax.swing.JLabel jlP3;
-    private javax.swing.JPanel jpOpciones;
-    private javax.swing.JPanel jpResultados;
-    private javax.swing.JScrollPane jspResultados;
-    private javax.swing.JTextArea jtaResultados;
+    private javax.swing.JPanel jpFigura;
+    private javax.swing.JPanel jpResultado;
+    private javax.swing.JScrollPane jspResultado;
+    private javax.swing.JTextArea jtaResultado;
     private javax.swing.JTextField jtfP1;
     private javax.swing.JTextField jtfP2;
     private javax.swing.JTextField jtfP3;
