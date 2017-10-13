@@ -15,10 +15,6 @@ public class VentanaPrincipal extends javax.swing.JFrame
     // Variable para referenciar el objeto remoto que tiene los procedimientos que calculan las caracteristicas de las figuras geometricas
     private static IFiguras clienteFiguras = null;
     
-    // Variable para realizar el dibujado de las figuras geometricas
-    //Graficador dibujo = new Graficador();
-    
-    
     // Constructor de la clase o ventana. Su proposito no va mas de lo estetico o para inicializacion de variables
     public VentanaPrincipal()
     {
@@ -41,7 +37,7 @@ public class VentanaPrincipal extends javax.swing.JFrame
         // Antes de terminar la construccion de esta ventana, se procede a realizar la conexion con el servidor
         if (conectarAlServidor())
         {
-            // Si la conexion es exitoso se muestra un mensaje y se permite al programa continuar
+            // Si la conexion es exitosa se muestra un mensaje y se permite al programa continuar
             System.out.println("Conexión establecida!");
         }
         else // Si la conexion es fallida entonces
@@ -66,7 +62,6 @@ public class VentanaPrincipal extends javax.swing.JFrame
         jtfP3.setEnabled(false);
         jtaResultado.setText("");
         jlAreaDibujo.setIcon(null);
-        //dibujo.limpiar();
     }
     
     // Metodo que realiza la conexion con el servidor e inicializa clienteFiguras con la direccion o referencia de donde esta el servidor
@@ -84,6 +79,13 @@ public class VentanaPrincipal extends javax.swing.JFrame
         }
         
         return true;
+    }
+    
+    // Metodo para desplegar en tiempo real la imagen de la figura que se trabajara y que dimensiones de esta se requieren
+    private void mostrarFigura(String fig)
+    {
+        ImageIcon imgFigura = new ImageIcon(getClass().getResource("/Imagenes/" + fig));
+        jlAreaDibujo.setIcon(imgFigura);
     }
     
     /**
@@ -240,7 +242,7 @@ public class VentanaPrincipal extends javax.swing.JFrame
             jpResultadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpResultadoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jspResultado, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                .addComponent(jspResultado)
                 .addContainerGap())
         );
 
@@ -258,27 +260,30 @@ public class VentanaPrincipal extends javax.swing.JFrame
                     .addComponent(jpResultado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jpFigura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jlAreaDibujo, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE)
+                .addComponent(jlAreaDibujo, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jlAreaDibujo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jlAreaDibujo, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jpFigura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jpResultado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(jpFigura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jpResultado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    // Evento disparado cuando se cambia la figura a estudiar o se limpia la ventana
+    // Evento disparado cuando se cambia la figura y dimension a estudiar o se limpia la ventana
     private void jcbOpcionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcbOpcionItemStateChanged
+        // Aunque este metodo parece grande en realidad es muy simple, ya que lo unico que hace
+        // es que de acuerdo a la operacion que se requiere, entonces se cambia las etiquetas y dibujo
+        // para guiar al usuario de una forma mas intuitiva.
         switch (jcbOpcion.getSelectedIndex())
         {
             case 0:
@@ -293,8 +298,7 @@ public class VentanaPrincipal extends javax.swing.JFrame
                 jtfP2.setEnabled(true);
                 jtfP3.setEnabled(false);
                 jtaResultado.setText("");
-                jlAreaDibujo.setIcon(null);
-                
+                mostrarFigura("01-02.png");
                 break;
             case 2:
             case 3:
@@ -308,8 +312,7 @@ public class VentanaPrincipal extends javax.swing.JFrame
                 jtfP2.setEnabled(true);
                 jtfP3.setEnabled(false);
                 jtaResultado.setText("");
-                jlAreaDibujo.setIcon(null);
-                
+                mostrarFigura("03-04.png");
                 break;
             case 4:
                 jlP1.setText("b:");
@@ -322,8 +325,7 @@ public class VentanaPrincipal extends javax.swing.JFrame
                 jtfP2.setEnabled(true);
                 jtfP3.setEnabled(false);
                 jtaResultado.setText("");
-                jlAreaDibujo.setIcon(null);
-                
+                mostrarFigura("05.png");
                 break;
             case 5:
                 jlP1.setText("a:");
@@ -336,8 +338,7 @@ public class VentanaPrincipal extends javax.swing.JFrame
                 jtfP2.setEnabled(true);
                 jtfP3.setEnabled(true);
                 jtaResultado.setText("");
-                jlAreaDibujo.setIcon(null);
-                
+                mostrarFigura("06.png");
                 break;
             case 6:
             case 7:
@@ -351,8 +352,7 @@ public class VentanaPrincipal extends javax.swing.JFrame
                 jtfP2.setEnabled(true);
                 jtfP3.setEnabled(true);
                 jtaResultado.setText("");
-                jlAreaDibujo.setIcon(null);
-                
+                mostrarFigura("07-08.png");
                 break;
             case 8:
             case 9:
@@ -366,8 +366,7 @@ public class VentanaPrincipal extends javax.swing.JFrame
                 jtfP2.setEnabled(true);
                 jtfP3.setEnabled(false);
                 jtaResultado.setText("");
-                jlAreaDibujo.setIcon(null);
-                
+                mostrarFigura("09-10.png");
                 break;
             case 10:
                 jlP1.setText("l:");
@@ -380,8 +379,7 @@ public class VentanaPrincipal extends javax.swing.JFrame
                 jtfP2.setEnabled(true);
                 jtfP3.setEnabled(false);
                 jtaResultado.setText("");
-                jlAreaDibujo.setIcon(null);
-                
+                mostrarFigura("11.png");
                 break;
             case 11:
                 jlP1.setText("l:");
@@ -394,8 +392,7 @@ public class VentanaPrincipal extends javax.swing.JFrame
                 jtfP2.setEnabled(true);
                 jtfP3.setEnabled(false);
                 jtaResultado.setText("");
-                jlAreaDibujo.setIcon(null);
-                
+                mostrarFigura("12.png");
                 break;
             case 12:
                 jlP1.setText("g:");
@@ -408,8 +405,7 @@ public class VentanaPrincipal extends javax.swing.JFrame
                 jtfP2.setEnabled(true);
                 jtfP3.setEnabled(false);
                 jtaResultado.setText("");
-                jlAreaDibujo.setIcon(null);
-                
+                mostrarFigura("13.png");
                 break;
             case 13:
                 jlP1.setText("h:");
@@ -422,8 +418,7 @@ public class VentanaPrincipal extends javax.swing.JFrame
                 jtfP2.setEnabled(true);
                 jtfP3.setEnabled(false);
                 jtaResultado.setText("");
-                jlAreaDibujo.setIcon(null);
-                
+                mostrarFigura("14.png");
                 break;
             default:
                 limpiarPantalla();
@@ -444,98 +439,83 @@ public class VentanaPrincipal extends javax.swing.JFrame
         
         try
         {
+            // Luego, se recuperan siempre los dos primeros parametros porque todas las figuras requieren por lo menos de 2 argumentos
             temp1 = Double.parseDouble(jtfP1.getText());
             temp2 = Double.parseDouble(jtfP2.getText());
             
-            // Si la operacion seleccionada es:
+            // Ahora, dependiendo de la operacion seleccionada seprocede a:
+            // [Opcional] Se obtiene un 3er parametro si este es necesario
+            // Se hace la invocacion del metodo remoto apropiado Y se muestra el resultado en el area correspondiente
             switch (jcbOpcion.getSelectedIndex())
             {
-                case 0:
+                case 0: // Calcular el área del rectángulo, entonces...
                     resul = clienteFiguras.areaRectangulo(temp1, temp2);
-
                     jtaResultado.setText("El área del rectángulo es:\n" + resul);
                     break;
-                case 1:
+                case 1: // Calcular el perímetro del rectángulo, entonces...
                     resul = clienteFiguras.permitroRectangulo(temp1, temp2);
-
                     jtaResultado.setText("El perímetro del rectángulo es:\n" + resul);
                     break;
-                case 2:
+                case 2: // Calcular el área de la elipse, entonces...
                     resul = clienteFiguras.areaElipse(temp1, temp2);
-
                     jtaResultado.setText("El área de la elipse es:\n" + resul);
                     break;
-                case 3:
+                case 3: // Calcular el perímetro de la elipse, entonces...
                     resul = clienteFiguras.permitroElipse(temp1, temp2);
-
                     jtaResultado.setText("El perímetro de la elipse es:\n" + resul);
                     break;
-                case 4:
+                case 4: // Calcular el área del triángulo, entonces...
                     resul = clienteFiguras.areaTriangulo(temp1, temp2);
-
                     jtaResultado.setText("El área del triángulo es:\n" + resul);
                     break;
-                case 5:
+                case 5: // Calcular el perímetro del triángulo, entonces...
                     temp3 = Double.parseDouble(jtfP3.getText());
-
                     resul = clienteFiguras.permitroTriangulo(temp1, temp2, temp3);
-
                     jtaResultado.setText("El perímetro del triángulo es:\n" + resul);
                     break;
-                case 6:
+                case 6: // Calcular el área del cubo, entonces...
                     temp3 = Double.parseDouble(jtfP3.getText());
-
                     resul = clienteFiguras.areaCubo(temp1, temp2, temp3);
-
                     jtaResultado.setText("El área del cubo es:\n" + resul);
                     break;
-                case 7:
+                case 7: // Calcular el volumen del cubo, entonces...
                     temp3 = Double.parseDouble(jtfP3.getText());
-
                     resul = clienteFiguras.volumenCubo(temp1, temp2, temp3);
-
                     jtaResultado.setText("El volumen del cubo es:\n" + resul);
                     break;
-                case 8:
+                case 8: // Calcular el área del cilindro, entonces...
                     resul = clienteFiguras.areaCilindro(temp1, temp2);
-
                     jtaResultado.setText("El área del cilindro es:\n" + resul);
                     break;
-                case 9:
+                case 9: // Calcular el volumen del cilindro, entonces...
                     resul = clienteFiguras.volumenCilindro(temp1, temp2);
-
                     jtaResultado.setText("El volumen del cilindro es:\n" + resul);
                     break;
-                case 10:
+                case 10: // Calcular el área de la pirámide, entonces...
                     resul = clienteFiguras.areaPiramide(temp1, temp2);
-
                     jtaResultado.setText("El área de la pirámide es:\n" + resul);
                     break;
-                case 11:
+                case 11: // Calcular el volumen de la pirámide, entonces...
                     resul = clienteFiguras.volumenPiramide(temp1, temp2);
-
                     jtaResultado.setText("El volumen de la pirámide es:\n" + resul);
                     break;
-                case 12:
+                case 12: // Calcular el área del cono entonces...
                     resul = clienteFiguras.areaCono(temp1, temp2);
-
                     jtaResultado.setText("El área del cono es:\n" + resul);
                     break;
-                case 13:
+                case 13: // Calcular el volumen del cono, entonces...
                     resul = clienteFiguras.volumenCono(temp1, temp2);
-
                     jtaResultado.setText("El volumen del cono es:\n" + resul);
                     break;
             }
         }
-        catch(NumberFormatException nfe)
+        catch(NumberFormatException nfe) // En caso que el usuario no haya ingresado algun dato o digito un caracter indebido, se le inidca al usuario
         {
             jtaResultado.setText("Revise sus parametros de entrada!");
         }
-        catch(RemoteException re)
+        catch(RemoteException re) // Por otro lado, si se perdio la conexion con el servidor tambien se le informa al usuario
         {
             System.out.println("Se perdio la conexion con el servidor!");
-            System.exit(0);
         }
     }//GEN-LAST:event_jbAnalizarActionPerformed
 
