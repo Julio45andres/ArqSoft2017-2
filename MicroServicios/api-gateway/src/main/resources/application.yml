@@ -1,0 +1,21 @@
+## YAML Template.
+zuul:
+    routes:
+        reservas:
+            path: /reservations/**
+            serviceId: MICROSERVICE-RESERVATION
+            stripPrefix: false
+        clientes:
+            path: /clientes/**
+            serviceId: MICROSERVICE-CLIENTE
+            stripPrefix: false
+eureka:
+    client:
+        registerWithEureka: false
+        serviceUrl:
+            defaultZone: http://localhost:1111/eureka
+server:
+    port: 8080
+    
+            
+            

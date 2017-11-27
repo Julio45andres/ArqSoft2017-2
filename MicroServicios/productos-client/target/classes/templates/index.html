@@ -1,0 +1,71 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>productos</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"/>
+        <style>
+            .container{
+                margin-top: 10vh;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <h1 class="h1 text-center">Microservicios - Demo</h1>
+                    <hr class="hr"/>
+                    <h3 class="h3 text-center">Descripción</h3>
+                    <p class="text-center">Apliación de muestra de microservicios, desarrollada con:</p>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th>>>> Netflix OSS</th>
+                                <th>>>> Spring Boot</th>
+                                <th>>>> Spring Cloud</th>
+                            </tr>
+                            <tr>
+                                <th>>>> Hystrix</th>
+                                <th>>>> API Gateways</th>
+                                <th>>>> Zuul</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr class="hr"/>
+                    <h3 class="h3">Enlaces de interes</h3>
+                    <div class="row">
+                        <div class="col-md-4">                          
+                            <ul class="list-group">
+                                <li class="list-group-item list-group-item-action"> <a href="http://localhost:1111">Tablero de Eureka</a></li>
+                                <li class="list-group-item list-group-item-action"> <a href="http://localhost:1111/eureka/apps/">Aplicaciones registradas</a></li>
+                                <li class="list-group-item list-group-item-action"> <a th:href="@{/producto/1}">Búsqueda por id</a></li>
+                                <li class="list-group-item list-group-item-action"> <a th:href="@{/producto}">Encontrar todos</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h3 class="h3 text-center">Spring Boot URLs</h3>
+                    <p class="text-center">
+                        SpringBoot provee RestFul Urls para hacer seguimiento de tu aplicación.
+                        <br/>Los datos son retornados en formato JSON.
+                    </p>
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-action"><a th:href="@{/beans}">The beans</a></li>
+                        <li class="list-group-item list-group-item-action"><a th:href="@{/env}">The environment</a></li>
+                        <li class="list-group-item list-group-item-action"><a th:href="@{/dump}">Thread dump</a></li>
+                        <li class="list-group-item list-group-item-action"><a th:href="@{/health}">Application health</a></li>
+                        <li class="list-group-item list-group-item-action"><a th:href="@{/info}">Application information</a></li>
+                        <li class="list-group-item list-group-item-action"><a th:href="@{/metrics}">Application metrics</a></li>
+                        <li class="list-group-item list-group-item-action"><a th:href="@{/trace}">Request call trace</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    </body>
+</html>

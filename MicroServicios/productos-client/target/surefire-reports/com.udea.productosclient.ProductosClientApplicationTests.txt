@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.udea.productosclient.ProductosClientApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 16.924 sec - in com.udea.productosclient.ProductosClientApplicationTests
